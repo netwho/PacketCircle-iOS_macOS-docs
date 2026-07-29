@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PacketCircle iOS - Quickstart</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 24px; line-height: 1.45; color: #111; }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    pre { background: #f6f8fa; padding: 12px; border-radius: 8px; overflow: auto; }
+    h1 { margin-top: 0; }
+  </style>
+</head>
+<body>
+  <h1>PacketCircle iOS: Quickstart</h1>
+  <p>PacketCircle iOS is an offline analyzer for PCAP/PCAPNG files. It lets you open a capture, explore communication pairs, and (optionally) follow TCP streams.</p>
+
+  <h2>Requirements</h2>
+  <ul>
+    <li>iOS 17+ (runs on-device or Simulator)</li>
+    <li>The iOS app does not support live capture (PCAP only)</li>
+  </ul>
+
+  <h2>1) Open a capture</h2>
+  <ol>
+    <li>Open PacketCircle iOS.</li>
+    <li>Import a <code>*.pcap</code> or <code>*.pcapng</code> from Files / Share Sheet.</li>
+    <li>The app loads the entire trace (no "partial vs replay" choices at import time).</li>
+    <li>When loading completes, use the bottom status bar:
+      <br><code>&lt;file name&gt; · &lt;X pkts&gt; · &lt;Y pairs&gt;</code>
+    </li>
+  </ol>
+
+  <h2>2) Explore communication pairs</h2>
+  <ul>
+    <li><strong>Circle</strong>: visual map of endpoints and communication pairs.</li>
+    <li><strong>Gauges</strong>: high-level traffic and protocol distribution.</li>
+    <li><strong>Conversations</strong>: table-style browsing and selection.</li>
+  </ul>
+  <p>Tip: Use search to jump to an IP/prefix or a TCP port (for example <code>TCP 443</code>).</p>
+
+  <h2>3) Replay original timing (optional)</h2>
+  <p>The default open is "load full trace". To replay with original timing:</p>
+  <ol>
+    <li>Tap the bottom capture status bar.</li>
+    <li>Confirm <strong>Replay</strong>.</li>
+  </ol>
+
+  <h2>4) Open session details</h2>
+  <p>Select a pair to open Session Details.</p>
+  <ul>
+    <li>In <strong>Session Details focus = Sockets (TCP ports)</strong>, you can pick a TCP socket (port) and TCP health follows that selection.</li>
+    <li>In <strong>Conversation (IP pair)</strong>, you see aggregated TCP health for the whole IP pair.</li>
+  </ul>
+
+  <h2>5) Follow TCP Stream (optional)</h2>
+  <p>Use <strong>Follow TCP Stream</strong> to view a capped reassembly for a single direction (client -&gt; server or server -&gt; client).</p>
+  <p>If the stream feels slow or truncated, open <strong>Options</strong> (gear icon) and adjust <strong>Follow TCP Stream budget (KB)</strong>.</p>
+</body>
+</html>
+
