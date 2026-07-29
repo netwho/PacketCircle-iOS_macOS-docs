@@ -4,6 +4,8 @@ PacketCircle iOS is an offline analyzer for PCAP/PCAPNG files. It lets you open 
 
 <img src="../assets/logo.png" alt="PacketCircle" width="64" />
 
+> Disclaimer: the iOS release is currently under review by the Apple App Store and should be available soon.  
+
 ## Screenshots
 
 ![Circle + capture bar](../assets/ios-circle.jpg)

@@ -2,6 +2,8 @@
 
 PacketCircle iOS is designed to be reliable and responsive on mobile devices. Several areas are capped or heuristic-based.
 
+> Disclaimer: the iOS release is currently under review by the Apple App Store and should be available soon.  
+
 ![Session Details (TCP health)](../assets/ios-session-details.jpg)
 
 ## Performance caps

@@ -2,6 +2,8 @@
 
 This document explains the main workflows in PacketCircle iOS: open/replay, options, session details, TCP follow, and how the UI choices affect results.
 
+> Disclaimer: the iOS release is currently under review by the Apple App Store and should be available soon.  
+
 ## Screenshots
 
 ![Follow TCP Stream](../assets/ios-follow-tcp-stream.jpg)

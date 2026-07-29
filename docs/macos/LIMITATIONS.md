@@ -2,9 +2,9 @@
 
 <img src="../assets/logo.png" alt="PacketCircle" width="64" />
 
-PacketCircle macOS is optimized for interactive exploration, but several features trade completeness for responsiveness.
+> Note: macOS code is not yet available publicly. Keep checking for updates.
 
-![Follow TCP Stream](../assets/ios-follow-tcp-stream.jpg)
+PacketCircle macOS is optimized for interactive exploration, but several features trade completeness for responsiveness.
 
 ## Performance caps
 
