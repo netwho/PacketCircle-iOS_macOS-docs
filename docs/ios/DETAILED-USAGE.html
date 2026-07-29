@@ -5,80 +5,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PacketCircle iOS - Detailed Usage</title>
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 24px; line-height: 1.45; color: #111; }
-    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
-    pre { background: #f6f8fa; padding: 12px; border-radius: 8px; overflow: auto; }
-    h1 { margin-top: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 24px auto; max-width: 820px; line-height: 1.45; color: #111; padding: 0 16px; }
+    .logo { display: block; width: 180px; height: 180px; margin: 8px auto 16px; }
+    .shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 16px 0 24px; }
+    .shots img { width: 100%; height: auto; border-radius: 10px; border: 1px solid #e5e7eb; }
+    .shots figcaption { font-size: 12px; color: #666; text-align: center; margin-top: 4px; }
+    .disclaimer { background: #fff8e6; border: 1px solid #f0d78c; border-radius: 8px; padding: 10px 14px; }
   </style>
 </head>
 <body>
   <h1>PacketCircle iOS: Detailed Usage</h1>
-  <p><img src="../assets/logo.png" alt="PacketCircle" style="width:64px;height:64px;vertical-align:middle;" />&nbsp;PacketCircle iOS</p>
-  <p>This document explains the main workflows in PacketCircle iOS: open/replay, options, session details, TCP follow, and how UI choices affect results.</p>
-  <p><strong>Disclaimer:</strong> the iOS release is currently under review by the Apple App Store and should be available soon.</p>
+  <img class="logo" src="../assets/logo.png" alt="PacketCircle" />
+  <p class="disclaimer"><strong>Disclaimer:</strong> the iOS release is currently under review by the Apple App Store and should be available soon.</p>
+  <p>Open/replay, Options, Session Details, and Follow TCP Stream.</p>
 
   <h2>Screenshots</h2>
-  <div>
-    <img src="../assets/ios-follow-tcp-stream.jpg" alt="Follow TCP Stream" style="max-width: 520px; width: 100%; height: auto; border-radius: 8px; margin: 10px 0;" />
-    <img src="../assets/ios-session-details.jpg" alt="Session Details (TCP health)" style="max-width: 520px; width: 100%; height: auto; border-radius: 8px; margin: 10px 0;" />
+  <div class="shots">
+    <figure><img src="../assets/ios-session-overview.jpg" alt="Session overview"><figcaption>Session overview</figcaption></figure>
+    <figure><img src="../assets/ios-session-health.jpg" alt="TCP health"><figcaption>TCP health</figcaption></figure>
+    <figure><img src="../assets/ios-tcp-exchange.jpg" alt="TCP exchange"><figcaption>TCP exchange</figcaption></figure>
+    <figure><img src="../assets/ios-app-decode.jpg" alt="Application decode"><figcaption>Application decode</figcaption></figure>
+    <figure><img src="../assets/ios-follow-tcp-stream.jpg" alt="Follow TCP Stream"><figcaption>Follow TCP Stream</figcaption></figure>
+    <figure><img src="../assets/ios-options.jpg" alt="Options"><figcaption>Options</figcaption></figure>
   </div>
 
-  <h2>App navigation</h2>
+  <h2>Options (gear)</h2>
+  <h3>TCP health focus</h3>
   <ul>
-    <li><strong>Circle</strong> tab: visual layout of endpoints and communication pairs.</li>
-    <li><strong>Gauges</strong> tab: protocol/quality and traffic summaries.</li>
-    <li><strong>Conversations</strong> tab: pair list and drill-down entry point.</li>
-    <li><strong>Decode</strong> tab (if available): application decode list (frames capped).</li>
+    <li><strong>Conversation (IP pair)</strong> — aggregated health for the IP pair</li>
+    <li><strong>Sockets (TCP ports)</strong> — port-specific health</li>
+  </ul>
+  <h3>Quality thresholds</h3>
+  <p>Lenient / Balanced / Strict — changes how the 0–100 score is graded (not the score itself).</p>
+  <h3>Follow TCP Stream budget</h3>
+  <p>Caps reassembly so large streams don’t freeze the UI.</p>
+
+  <h2>Session Details</h2>
+  <ul>
+    <li><strong>TCP Session Health</strong> — score, window, retrans, RST, zero-window</li>
+    <li><strong>TCP Exchange</strong> — client↔server ladder (paginated)</li>
+    <li><strong>Application decode</strong> — DNS/HTTP/… previews (paginated)</li>
   </ul>
 
-  <h2>Open vs Replay</h2>
-  <h3>Default behavior: load entire trace</h3>
-  <p>When you import a capture, PacketCircle iOS loads the full trace for analysis and visualization.</p>
-  <h3>Replay: original timing</h3>
-  <ol>
-    <li>Tap the bottom capture status bar.</li>
-    <li>Confirm <strong>Replay</strong>.</li>
-  </ol>
-
-  <h2>Options (gear icon)</h2>
-  <p>The Options sheet controls key analysis and UX settings.</p>
-
-  <h3>Quality thresholds preset</h3>
-  <ul>
-    <li><strong>Easy</strong></li>
-    <li><strong>Balanced</strong></li>
-    <li><strong>Tough</strong></li>
-  </ul>
-  <p>This affects how TCP session quality scores map to grade bands and labels.</p>
-
-  <h3>Session details focus (TCP health scope)</h3>
-  <ul>
-    <li><strong>Sockets (TCP ports)</strong>: shows TCP health per selected port when multiple ports exist between the same two IPs.</li>
-    <li><strong>Conversation (IP pair)</strong>: shows TCP health aggregated across all TCP ports between the two IPs.</li>
-  </ul>
-
-  <h3>Follow TCP Stream budget (performance cap)</h3>
-  <p>Follow TCP Stream reassembles payload and can become expensive on large captures. Adjust:</p>
-  <ul>
-    <li><strong>Follow TCP Stream budget (KB)</strong></li>
-  </ul>
-  <p>If truncated, the UI indicates it.</p>
-
-  <h2>Session Details: pagination</h2>
-  <p>Some sections use pagination by default:</p>
-  <ul>
-    <li><strong>TCP Exchange</strong>: 20 lines shown, with <strong>Show more</strong>.</li>
-    <li><strong>Application decode</strong>: 20 lines shown, with <strong>Show more</strong>.</li>
-  </ul>
-
-  <h2>Follow TCP Stream: directions and colors</h2>
-  <p>Follow TCP Stream shows a single direction:</p>
-  <ul>
-    <li><strong>Client -&gt; Server</strong></li>
-    <li><strong>Server -&gt; Client</strong></li>
-  </ul>
-  <p>The view uses direction-aware client/server coloring.</p>
-  <p>Client/server direction is derived from SYN when available; otherwise it uses a best-effort heuristic (well-known port / port ordering).</p>
+  <h2>Follow TCP Stream</h2>
+  <p>Client = red · Server = blue. Without SYN, direction uses a well-known-port heuristic.</p>
 </body>
 </html>
-

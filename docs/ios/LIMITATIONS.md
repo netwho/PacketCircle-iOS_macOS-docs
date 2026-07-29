@@ -1,53 +1,38 @@
 # PacketCircle iOS: Limitations
 
-PacketCircle iOS is designed to be reliable and responsive on mobile devices. Several areas are capped or heuristic-based.
+<p align="center">
+  <img src="../assets/logo.png" alt="PacketCircle" width="180" />
+</p>
 
-> Disclaimer: the iOS release is currently under review by the Apple App Store and should be available soon.  
+> **Disclaimer:** the iOS release is currently under review by the Apple App Store and should be available soon.
 
-![Session Details (TCP health)](../assets/ios-session-details.jpg)
+PacketCircle iOS favors responsiveness on phone. Several areas are capped or heuristic-based.
+
+![TCP health (native estimate)](../assets/ios-session-health.jpg)
 
 ## Performance caps
 
-### Follow TCP Stream truncation
+### Follow TCP Stream
 
-Follow TCP Stream reassembles and displays a capped amount of payload.
+Reassembly is limited by **Options → Follow TCP Stream budget (KB)**. Truncation is indicated in the UI.
 
-- Controlled by **Options -> Follow TCP Stream budget (KB)**.
-- When the budget is reached, the displayed stream is truncated.
+### Decode list
 
-If a stream is too large, increase the budget carefully (higher values cost CPU and memory).
+Decode stops after a maximum frame count. Narrow by pair/port and reopen for more.
 
-### Decode list caps
+## Data scope & heuristics
 
-Any decode list view uses a maximum number of frames.
+- **Conversation vs Sockets** focus changes whether TCP health is IP-pair aggregated or port-specific
+- Client/server without SYN uses a well-known-port heuristic
+- TCP health is a **native estimate** — not Wireshark `tcp.analysis`
 
-If you need more, filter down the selection (for example by pair and port) and re-open decode.
+## iOS constraints
 
-## Data scope and heuristics
+- No live capture (offline PCAP/PCAPNG only)
+- Very large files may feel slow or hit memory pressure on older devices
 
-### Session Details TCP health scope
+## Tips
 
-TCP health metrics depend on **Session Details focus**:
-
-- **Conversation (IP pair)**: aggregated across all TCP ports between the two IPs.
-- **Sockets (TCP ports)**: port-specific health for the selected TCP port.
-
-If you suspect a slow service, use **Sockets** mode and pick the correct port.
-
-### Client/server detection in Follow TCP Stream
-
-Client/server direction is derived from SYN when available.
-
-If the capture does not include the SYN for that TCP connection, PacketCircle uses a best-effort heuristic (well-known port / port ordering).
-
-## iOS-specific constraints
-
-- No live capture on device (offline PCAP/PCAPNG only).
-- Very large captures can feel slow or get memory pressure on older devices.
-
-## Practical recommendations
-
-1. Prefer filtering to a smaller capture when doing deep decode or follow.
-2. If Follow TCP Stream truncates too early, raise **Follow TCP Stream budget (KB)**.
-3. Use **Sockets (TCP ports)** to pinpoint which port/service is slow.
-
+1. Prefer smaller / filtered captures for deep decode and follow  
+2. Raise the Follow budget only when needed  
+3. Use **Sockets** focus to isolate a slow service/port

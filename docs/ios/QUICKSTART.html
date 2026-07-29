@@ -5,66 +5,60 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PacketCircle iOS - Quickstart</title>
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 24px; line-height: 1.45; color: #111; }
-    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
-    pre { background: #f6f8fa; padding: 12px; border-radius: 8px; overflow: auto; }
-    h1 { margin-top: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 24px auto; max-width: 820px; line-height: 1.45; color: #111; padding: 0 16px; }
+    .logo { display: block; width: 180px; height: 180px; margin: 8px auto 16px; }
+    .shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 16px 0 24px; }
+    .shots img { width: 100%; height: auto; border-radius: 10px; border: 1px solid #e5e7eb; }
+    .shots figcaption { font-size: 12px; color: #666; text-align: center; margin-top: 4px; }
+    .disclaimer { background: #fff8e6; border: 1px solid #f0d78c; border-radius: 8px; padding: 10px 14px; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
   </style>
 </head>
 <body>
   <h1>PacketCircle iOS: Quickstart</h1>
-  <p><img src="../assets/logo.png" alt="PacketCircle" style="width:64px;height:64px;vertical-align:middle;" />&nbsp;PacketCircle iOS</p>
-  <p><strong>Disclaimer:</strong> the iOS release is currently under review by the Apple App Store and should be available soon.</p>
-  <h2>Screenshots</h2>
-  <div>
-    <img src="../assets/ios-circle.jpg" alt="Circle + capture bar" style="max-width: 520px; width: 100%; height: auto; border-radius: 8px; margin: 10px 0;" />
-    <img src="../assets/ios-conversations.jpg" alt="Conversations list" style="max-width: 520px; width: 100%; height: auto; border-radius: 8px; margin: 10px 0;" />
-    <img src="../assets/ios-follow-tcp-stream.jpg" alt="Follow TCP Stream" style="max-width: 520px; width: 100%; height: auto; border-radius: 8px; margin: 10px 0;" />
-  </div>
+  <img class="logo" src="../assets/logo.png" alt="PacketCircle" />
+  <p class="disclaimer"><strong>Disclaimer:</strong> the iOS release is currently under review by the Apple App Store and should be available soon.</p>
+  <p>PacketCircle iOS is an offline analyzer for PCAP/PCAPNG files. Open a capture, explore communication pairs on the circle, and optionally follow TCP streams.</p>
 
-  <p>PacketCircle iOS is an offline analyzer for PCAP/PCAPNG files. It lets you open a capture, explore communication pairs, and (optionally) follow TCP streams.</p>
+  <h2>Screenshots</h2>
+  <div class="shots">
+    <figure><img src="../assets/ios-home.jpg" alt="Home"><figcaption>Home</figcaption></figure>
+    <figure><img src="../assets/ios-circle.jpg" alt="Circle"><figcaption>Circle</figcaption></figure>
+    <figure><img src="../assets/ios-gauges.jpg" alt="Gauges"><figcaption>Gauges</figcaption></figure>
+    <figure><img src="../assets/ios-options.jpg" alt="Options"><figcaption>Options</figcaption></figure>
+    <figure><img src="../assets/ios-follow-tcp-stream.jpg" alt="Follow TCP Stream"><figcaption>Follow TCP Stream</figcaption></figure>
+    <figure><img src="../assets/ios-decode.jpg" alt="Decode"><figcaption>Decode</figcaption></figure>
+  </div>
 
   <h2>Requirements</h2>
   <ul>
-    <li>iOS 17+ (runs on-device or Simulator)</li>
-    <li>The iOS app does not support live capture (PCAP only)</li>
+    <li>iOS 17+ (device or Simulator)</li>
+    <li>Offline PCAP/PCAPNG only — <strong>no live capture</strong> on device</li>
   </ul>
 
   <h2>1) Open a capture</h2>
   <ol>
     <li>Open PacketCircle iOS.</li>
-    <li>Import a <code>*.pcap</code> or <code>*.pcapng</code> from Files / Share Sheet.</li>
-    <li>The app loads the entire trace (no "partial vs replay" choices at import time).</li>
-    <li>When loading completes, use the bottom status bar:
-      <br><code>&lt;file name&gt; · &lt;X pkts&gt; · &lt;Y pairs&gt;</code>
-    </li>
+    <li>Tap <strong>Open Capture</strong> or use <strong>Demo Mode</strong>.</li>
+    <li>The app loads the entire trace.</li>
+    <li>Bottom status bar: <code>&lt;file&gt; · &lt;X pkts&gt; · &lt;Y pairs&gt;</code></li>
   </ol>
 
-  <h2>2) Explore communication pairs</h2>
+  <h2>2) Explore</h2>
   <ul>
-    <li><strong>Circle</strong>: visual map of endpoints and communication pairs.</li>
-    <li><strong>Gauges</strong>: high-level traffic and protocol distribution.</li>
-    <li><strong>Conversations</strong>: table-style browsing and selection.</li>
-  </ul>
-  <p>Tip: Use search to jump to an IP/prefix or a TCP port (for example <code>TCP 443</code>).</p>
-
-  <h2>3) Replay original timing (optional)</h2>
-  <p>The default open is "load full trace". To replay with original timing:</p>
-  <ol>
-    <li>Tap the bottom capture status bar.</li>
-    <li>Confirm <strong>Replay</strong>.</li>
-  </ol>
-
-  <h2>4) Open session details</h2>
-  <p>Select a pair to open Session Details.</p>
-  <ul>
-    <li>In <strong>Session Details focus = Sockets (TCP ports)</strong>, you can pick a TCP socket (port) and TCP health follows that selection.</li>
-    <li>In <strong>Conversation (IP pair)</strong>, you see aggregated TCP health for the whole IP pair.</li>
+    <li><strong>Circle</strong> — visual map of talkers and pairs</li>
+    <li><strong>Gauges</strong> — rates, top talkers, top protocols</li>
+    <li><strong>Talkers</strong> — conversation list</li>
+    <li><strong>Decode</strong> — packet list + hex/details</li>
   </ul>
 
-  <h2>5) Follow TCP Stream (optional)</h2>
-  <p>Use <strong>Follow TCP Stream</strong> to view a capped reassembly for a single direction (client -&gt; server or server -&gt; client).</p>
-  <p>If the stream feels slow or truncated, open <strong>Options</strong> (gear icon) and adjust <strong>Follow TCP Stream budget (KB)</strong>.</p>
+  <h2>3) Replay (optional)</h2>
+  <p>Tap the bottom capture status bar → confirm <strong>Replay</strong>.</p>
+
+  <h2>4) Session details</h2>
+  <p>Select a pair → <strong>Session details</strong> for TCP health, exchange, and application decode.</p>
+
+  <h2>5) Follow TCP Stream</h2>
+  <p>Client = red · Server = blue. Adjust the budget under <strong>Options</strong> if needed.</p>
 </body>
 </html>
-

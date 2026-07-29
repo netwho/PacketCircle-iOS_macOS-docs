@@ -1,5 +1,9 @@
 # PacketCircle Native Docs
 
+<p align="center">
+  <img src="./assets/logo.png" alt="PacketCircle" width="180" />
+</p>
+
 Public documentation for the macOS + iOS PacketCircle Native apps.
 
 ## iOS
@@ -8,9 +12,12 @@ Public documentation for the macOS + iOS PacketCircle Native apps.
 - [Detailed usage](./ios/DETAILED-USAGE.md)
 - [Limitations](./ios/LIMITATIONS.md)
 
+> Disclaimer: iOS is under App Store review and should be available soon.
+
 ## macOS
 
-- [Quickstart](./macos/QUICKSTART.md)
-- [Detailed usage](./macos/DETAILED-USAGE.md)
-- [Limitations](./macos/LIMITATIONS.md)
+- [Quickstart (teaser)](./macos/QUICKSTART.md)
+- [Detailed usage (teaser)](./macos/DETAILED-USAGE.md)
+- [Limitations (teaser)](./macos/LIMITATIONS.md)
 
+> Coming soon: macOS code is not yet available publicly.

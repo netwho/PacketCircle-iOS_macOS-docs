@@ -1,88 +1,64 @@
 # PacketCircle iOS: Detailed Usage
 
-This document explains the main workflows in PacketCircle iOS: open/replay, options, session details, TCP follow, and how the UI choices affect results.
+<p align="center">
+  <img src="../assets/logo.png" alt="PacketCircle" width="180" />
+</p>
 
-> Disclaimer: the iOS release is currently under review by the Apple App Store and should be available soon.  
+> **Disclaimer:** the iOS release is currently under review by the Apple App Store and should be available soon.
+
+This document covers open/replay, Options, Session Details, and Follow TCP Stream.
 
 ## Screenshots
 
-![Follow TCP Stream](../assets/ios-follow-tcp-stream.jpg)
-![Session Details](../assets/ios-session-details.jpg)
+| Session overview | TCP health | TCP exchange |
+|:---:|:---:|:---:|
+| ![Session](../assets/ios-session-overview.jpg) | ![TCP health](../assets/ios-session-health.jpg) | ![TCP exchange](../assets/ios-tcp-exchange.jpg) |
+
+| Application decode | Follow TCP Stream | Options |
+|:---:|:---:|:---:|
+| ![App decode](../assets/ios-app-decode.jpg) | ![Follow](../assets/ios-follow-tcp-stream.jpg) | ![Options](../assets/ios-options.jpg) |
 
 ## App navigation
 
-- **Circle tab**: visual layout of endpoints and communication pairs.
-- **Gauges tab**: protocol/quality and traffic summaries.
-- **Conversations tab**: pair list and drill-down entry point.
-- **Decode tab** (if available): application decode list (frames capped).
+- **Circle** — endpoints and pairs on a ring
+- **Gauges** — packets/bytes/errors rates + top talkers/protocols
+- **Talkers** — pair list and drill-down
+- **Decode** — capped frame list with details/hex
 
 ## Open vs Replay
 
-### Default behavior: load entire trace
+Import always loads the **full** trace. Tap the bottom status bar to **Replay** at original inter-frame timing.
 
-When you import a capture, PacketCircle iOS loads the full trace for analysis and visualization.
+## Options (gear)
 
-### Replay: original timing
+### TCP health focus
 
-You can replay the trace at the original packet timing:
-1. Tap the bottom capture status bar.
-2. Confirm "Replay".
+- **Conversation (IP pair)** — one aggregated TCP health summary for the IP pair
+- **Sockets (TCP ports)** — pick a TCP port; health is port-specific
 
-This keeps exploration responsive while still giving you time-accurate playback when you want it.
+### Quality thresholds
 
-## Options (gear icon)
+Maps the 0–100 session score to Excellent / Good / Fair / Poor:
 
-The **Options** sheet controls a few key analysis and UX settings:
+- **Lenient** — more sessions look healthy
+- **Balanced** — default PacketCircle bands
+- **Strict** — only clean sessions look Excellent
 
-### Quality thresholds preset
+The score itself does not change — only the grade coloring does.
 
-Choose how TCP session quality scores are mapped to grade bands:
-- **Easy**
-- **Balanced**
-- **Tough**
+### Follow TCP Stream budget
 
-This affects what you see for "quality" coloring and grade labeling (for example in edges and session quality summaries).
+Caps reassembly payload (and scan) so large streams don’t freeze the UI. Raise carefully if you need more data.
 
-### Session details focus (TCP health scope)
+## Session Details
 
-Choose what TCP health is shown as you inspect a pair:
+- **TCP Session Health** — score, window, retransmissions, RST, zero-window, SYN/FIN
+- **TCP Exchange** — client↔server ladder (20 rows, then Show more)
+- **Application decode** — DNS/HTTP/… previews (20 rows, then Show more)
 
-- **Sockets (TCP ports)** (default for identifying slow services)
-  - If multiple TCP ports exist between the same two IPs, you can pick a specific "TCP socket" (port).
-  - RTT/retrans/RST/zero-window and other TCP health metrics will be computed for that port.
+## Follow TCP Stream
 
-- **Conversation (IP pair)**
-  - TCP health is aggregated across the entire IP pair.
-  - Port-level differences are not shown in health metrics.
+Directions: Entire / Client→Server / Server→Client. Formats: ASCII / Hex / Hex+ASCII.
 
-### Follow TCP Stream budget (performance cap)
-
-Follow TCP Stream reassembles payload and builds an ASCII/HEX view.
-
-To prevent UI freezing on large captures, PacketCircle caps how much data it will reassemble and how much it will scan.
-Adjust:
-- **Follow TCP Stream budget (KB)**
-
-If the displayed stream is truncated, the UI will indicate it.
-
-## Session Details: TCP Exchange and Application Decode
-
-Some sections use pagination by default:
-
-- **TCP Exchange**: 20 lines shown, with **Show more** to load additional items.
-- **Application decode**: 20 lines shown, with **Show more** to load additional items.
-
-This makes navigation usable on large sessions.
-
-## Follow TCP Stream: directions and colors
-
-Follow TCP Stream shows a single direction at a time:
-- **Client -> Server**
-- **Server -> Client**
-
-The view uses a direction-aware client/server split:
-- Client side text uses the "Client" color.
-- Server side text uses the "Server" color.
-
-If a capture does not contain the SYN packet, PacketCircle uses a heuristic to decide which side is the server/client so colors and direction remain intuitive.
-
+- **Client** = red · **Server** = blue  
+- Without SYN, direction uses a well-known-port heuristic

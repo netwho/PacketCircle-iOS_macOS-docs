@@ -3,68 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>PacketCircle macOS - Detailed Usage</title>
+  <title>PacketCircle macOS - Coming soon</title>
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 24px; line-height: 1.45; color: #111; }
-    code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
-    h1 { margin-top: 0; }
-    pre { background: #f6f8fa; padding: 12px; border-radius: 8px; overflow: auto; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 40px auto; max-width: 640px; line-height: 1.5; color: #111; text-align: center; }
+    .logo { width: 180px; height: 180px; margin: 12px 0 20px; }
+    .note { background: #f6f8fa; border-radius: 10px; padding: 14px 18px; display: inline-block; }
   </style>
 </head>
 <body>
-  <h1>PacketCircle macOS: Detailed Usage</h1>
-  <p><img src="../assets/logo.png" alt="PacketCircle" style="width:64px;height:64px;vertical-align:middle;" />&nbsp;PacketCircle macOS</p>
-  <p><strong>Note:</strong> macOS code is not yet available publicly. Keep checking for updates.</p>
-
-  <h2>App navigation</h2>
-  <ul>
-    <li><strong>Circle</strong>: visual communication graph.</li>
-    <li><strong>Gauges</strong>: traffic/protocol summaries.</li>
-    <li><strong>Conversations</strong>: browse and select communication pairs.</li>
-    <li><strong>Decode</strong>: application decode list for selected traffic (frame capped).</li>
-  </ul>
-
-  <h2>Open vs Replay</h2>
-  <h3>Default behavior: load entire trace</h3>
-  <p>When you import a capture, PacketCircle macOS loads the full trace for analysis and visualization.</p>
-  <h3>Replay: original timing</h3>
-  <ol>
-    <li>Tap the bottom capture status bar.</li>
-    <li>Confirm <q>Replay</q>.</li>
-  </ol>
-
-  <h2>Options (gear icon)</h2>
-  <h3>Quality thresholds preset</h3>
-  <p>Choose how TCP session quality maps to grade labels:</p>
-  <ul>
-    <li>Easy</li>
-    <li>Balanced</li>
-    <li>Tough</li>
-  </ul>
-  <p>This affects edge coloring and quality summaries.</p>
-
-  <h3>Session details focus</h3>
-  <ul>
-    <li><strong>Conversation (IP pair)</strong>: aggregated TCP health across all TCP ports between the two IPs.</li>
-    <li><strong>Sockets (TCP ports)</strong>: port-specific TCP health for the selected TCP port.</li>
-  </ul>
-
-  <h3>Follow TCP Stream budget (performance cap)</h3>
-  <p>Follow TCP Stream reassembles payload and can be expensive on large captures. Adjust <strong>Follow TCP Stream budget (KB)</strong>. The UI indicates when output is truncated.</p>
-
-  <h2>Session Details pagination</h2>
-  <ul>
-    <li><strong>TCP Exchange</strong>: 20 lines shown by default; use <q>Show more</q>.</li>
-    <li><strong>Application decode</strong>: 20 lines shown by default; use <q>Show more</q>.</li>
-  </ul>
-
-  <h2>Follow TCP Stream</h2>
-  <p>Follow TCP Stream supports:</p>
-  <ul>
-    <li>Client -&gt; Server direction</li>
-    <li>Server -&gt; Client direction</li>
-  </ul>
-  <p>Client/server coloring is direction-aware; if SYN is missing, direction uses a best-effort heuristic (well-known port / port ordering).</p>
+  <h1>PacketCircle macOS</h1>
+  <img class="logo" src="../assets/logo.png" alt="PacketCircle" />
+  <p class="note"><strong>Coming soon.</strong> macOS code is not yet available publicly. Keep checking back.</p>
+  <p>Detailed usage for the macOS app will appear here once the public release is ready.</p>
 </body>
 </html>
-
