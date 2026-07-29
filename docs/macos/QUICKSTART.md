@@ -1,5 +1,13 @@
 # PacketCircle macOS: Quickstart
 
+<img src="../assets/logo.png" alt="PacketCircle" width="64" />
+
+## Screenshots
+
+![Open capture / demo start](../assets/macos-home.jpg)
+![Main UI (open/toolbar)](../assets/macos-controls.jpg)
+![Toolbar and options](../assets/macos-toolbar.jpg)
+
 PacketCircle macOS is a native SwiftUI app for visualizing communication pairs from PCAP/PCAPNG captures.
 
 ## Requirements

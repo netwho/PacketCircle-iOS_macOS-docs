@@ -1,5 +1,13 @@
 # PacketCircle macOS: Detailed Usage
 
+<img src="../assets/logo.png" alt="PacketCircle" width="64" />
+
+## Screenshots
+
+![Open capture / demo start](../assets/macos-home.jpg)
+![Main UI (open/toolbar)](../assets/macos-controls.jpg)
+![Follow TCP Stream](../assets/ios-follow-tcp-stream.jpg)
+
 This document describes typical workflows in PacketCircle macOS: open/replay, options, exploring session details, and following TCP streams.
 
 ## App navigation

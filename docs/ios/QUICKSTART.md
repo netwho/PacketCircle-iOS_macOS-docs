@@ -2,6 +2,14 @@
 
 PacketCircle iOS is an offline analyzer for PCAP/PCAPNG files. It lets you open a capture, explore communication pairs, and (optionally) follow TCP streams.
 
+<img src="../assets/logo.png" alt="PacketCircle" width="64" />
+
+## Screenshots
+
+![Circle + capture bar](../assets/ios-circle.jpg)
+![Conversations list](../assets/ios-conversations.jpg)
+![Follow TCP Stream](../assets/ios-follow-tcp-stream.jpg)
+
 ## Requirements
 
 - iOS 17+ (runs on-device or Simulator)

@@ -1,6 +1,10 @@
 # PacketCircle macOS: Limitations
 
+<img src="../assets/logo.png" alt="PacketCircle" width="64" />
+
 PacketCircle macOS is optimized for interactive exploration, but several features trade completeness for responsiveness.
+
+![Follow TCP Stream](../assets/ios-follow-tcp-stream.jpg)
 
 ## Performance caps
 
