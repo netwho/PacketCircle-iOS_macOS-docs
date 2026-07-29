@@ -9,20 +9,53 @@
     .logo { display: block; width: 180px; height: 180px; margin: 8px auto 16px; }
     .shot { max-width: 320px; width: 100%; height: auto; border-radius: 10px; border: 1px solid #e5e7eb; margin: 12px 0; }
     .disclaimer { background: #fff8e6; border: 1px solid #f0d78c; border-radius: 8px; padding: 10px 14px; }
+    table { border-collapse: collapse; width: 100%; margin: 12px 0 20px; font-size: 0.95rem; }
+    th, td { border: 1px solid #e5e7eb; padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { background: #f6f8fa; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 0.9em; }
   </style>
 </head>
 <body>
   <h1>PacketCircle iOS: Limitations</h1>
   <img class="logo" src="../assets/logo.png" alt="PacketCircle" />
   <p class="disclaimer"><strong>Disclaimer:</strong> the iOS release is currently under review by the Apple App Store and should be available soon.</p>
-  <p>PacketCircle iOS favors responsiveness on phone. Several areas are capped or heuristic-based.</p>
+  <p>PacketCircle iOS favors responsiveness on phone. There is <strong>no hard-coded maximum PCAP file size</strong>, but memory, CPU, and a few feature caps set real expectations.</p>
   <img class="shot" src="../assets/ios-session-health.jpg" alt="TCP health (native estimate)" />
 
-  <h2>Performance caps</h2>
+  <h2>What to expect (quick guidance)</h2>
+  <table>
+    <tr><th>Situation</th><th>Comfortable on iPhone</th><th>Possible but tight</th></tr>
+    <tr><td><strong>PCAP / PCAPNG size</strong></td><td>~50–200 MB</td><td>Larger files may feel slow or get memory-killed on older devices</td></tr>
+    <tr><td><strong>Packet count</strong></td><td>Hundreds of thousands</td><td>Millions — analysis streams, but decode/follow get heavy</td></tr>
+    <tr><td><strong>Unique conversations (pairs)</strong></td><td>Hundreds → low thousands</td><td>Very large pair sets grow RAM</td></tr>
+    <tr><td><strong>Circle Top N</strong></td><td>10 / 25 / 50</td><td>Only top N pairs are drawn</td></tr>
+    <tr><td><strong>Hosts on the ring</strong></td><td>Up to 64 stable slots</td><td>Extra hosts may not get a permanent slot</td></tr>
+  </table>
+  <p><strong>Rule of thumb:</strong> Circle / Gauges / Talkers scale with <strong>how many unique pairs</strong> you have, not only with file size.</p>
+
+  <h2>Open / analyze</h2>
+  <p>Opening a capture <strong>streams</strong> frames from disk and keeps aggregates only (pairs, ports, protocols, TCP quality) — not every payload.</p>
   <ul>
-    <li><strong>Follow TCP Stream</strong> — limited by Options → Follow TCP Stream budget (KB)</li>
-    <li><strong>Decode list</strong> — stops after a maximum frame count</li>
+    <li>File size / packet count: soft limits (I/O + CPU)</li>
+    <li>Memory grows with unique conversations and TCP flows</li>
+    <li>Payloads are discarded after classification during analyze</li>
   </ul>
+
+  <h2>Feature caps (hard numbers)</h2>
+  <table>
+    <tr><th>Feature</th><th>Limit</th><th>Notes</th></tr>
+    <tr><td>Decode list</td><td><strong>2 500</strong> frames</td><td>Rest ignored for that Decode view</td></tr>
+    <tr><td>Application decode (Session)</td><td>Paginated (20 + Show more); load ~200</td><td>Pair/port scoped</td></tr>
+    <tr><td>TCP Exchange</td><td>Paginated (20 + Show more)</td><td>Keeps Session usable</td></tr>
+    <tr><td>Follow TCP Stream budget</td><td><strong>64–2048 KB</strong> (default 256)</td><td>Options slider; truncation indicated</td></tr>
+    <tr><td>Follow absolute ceiling</td><td>~<strong>2 MB</strong> at max budget</td><td>Not unlimited</td></tr>
+    <tr><td>Circle Top N</td><td>10 / 25 / 50</td><td>Filter-then-Top‑N</td></tr>
+    <tr><td>Ring capacity</td><td><strong>64</strong> hosts</td><td>Layout / demo stability</td></tr>
+    <tr><td>Gauge history</td><td>60 rate samples</td><td>Rolling window</td></tr>
+  </table>
+
+  <h2>Demo Mode</h2>
+  <p>Loads every frame + payload into memory and replays ~60 seconds in a loop. Prefer a small demo file. Use <strong>Open Capture</strong> for real / large files.</p>
 
   <h2>Data scope &amp; heuristics</h2>
   <ul>
@@ -31,10 +64,21 @@
     <li>TCP health is a <strong>native estimate</strong> — not Wireshark <code>tcp.analysis</code></li>
   </ul>
 
-  <h2>iOS constraints</h2>
+  <h2>Formats &amp; capture reality</h2>
   <ul>
-    <li>No live capture (offline PCAP/PCAPNG only)</li>
-    <li>Very large files may feel slow on older devices</li>
+    <li>PCAP and PCAPNG supported</li>
+    <li><strong>No live capture</strong> on device</li>
+    <li>Truncated trailing frames tolerated (partial analysis)</li>
   </ul>
+
+  <h2>Practical recommendations</h2>
+  <ol>
+    <li>Prefer filtered captures for Decode / Follow TCP Stream.</li>
+    <li>Keep opens in the ~50–200 MB comfort zone when possible.</li>
+    <li>Lower Top N or filter protocols if the circle feels crowded.</li>
+    <li>Raise Follow budget only when needed.</li>
+    <li>Use Sockets focus to isolate a slow service on a shared IP pair.</li>
+    <li>For huge captures: overview on phone, deep decode on laptop / Wireshark.</li>
+  </ol>
 </body>
 </html>

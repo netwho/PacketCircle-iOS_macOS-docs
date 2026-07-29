@@ -6,30 +6,87 @@
 
 > **Disclaimer:** the iOS release is currently under review by the Apple App Store and should be available soon.
 
-PacketCircle iOS favors responsiveness on phone. Several areas are capped or heuristic-based.
+PacketCircle iOS favors responsiveness on phone. There is **no hard-coded maximum PCAP file size**, but memory, CPU, and a few feature caps set real expectations. This page is meant to set those expectations clearly.
 
 ![TCP health (native estimate)](../assets/ios-session-health.jpg)
 
-## Performance caps
+## What to expect (quick guidance)
 
-### Follow TCP Stream
+| Situation | Comfortable on iPhone | Possible but tight |
+|-----------|------------------------|--------------------|
+| **PCAP / PCAPNG size** | ~**50–200 MB** | Larger files may feel slow or get memory-killed on older devices |
+| **Packet count** | Hundreds of thousands | Millions — analysis still streams, but UI work (decode/follow) gets heavy |
+| **Unique conversations (pairs)** | Hundreds → low thousands | Very large pair sets grow RAM (aggregates are kept in memory) |
+| **Circle Top N** | **10 / 25 / 50** (UI) | Only the top N pairs are drawn; others remain in Talkers/analysis |
+| **Hosts on the ring** | Up to **64** stable slots | Extra hosts may not get a permanent ring slot |
 
-Reassembly is limited by **Options → Follow TCP Stream budget (KB)**. Truncation is indicated in the UI.
+**Rule of thumb:** Circle / Gauges / Talkers scale with **how many unique pairs** you have, not only with file size. A 500 MB capture with few talkers can be fine; a smaller file with huge fan-out of unique IPs can still pressure memory.
 
-### Decode list
+## Open / analyze (Circle, Gauges, Talkers)
 
-Decode stops after a maximum frame count. Narrow by pair/port and reopen for more.
+Opening a capture **streams** frames from disk. PacketCircle keeps **aggregates only** (pairs, ports, protocol counts, TCP quality estimates) — not a full in-memory copy of every payload.
+
+| Constraint | Behavior |
+|---|---|
+| File size | Soft limit (I/O + CPU); no `maxBytes` check |
+| Packet count | Soft limit; full sequential pass |
+| Memory | Grows with **unique conversations** and **TCP flows** |
+| Payloads during analyze | Discarded after classification |
+
+**Stress case:** millions of unique IP pairs (or TCP 5-tuples) can exhaust RAM even when streaming I/O is fine.
+
+## Feature caps (hard numbers)
+
+| Feature | Limit | Notes |
+|---|---|---|
+| **Decode list** | **2 500** frames | Rest of the file is ignored for that Decode view |
+| **Session → Application decode** | Paginated (**20** rows, Show more); load capped (~**200** frames) | Use pair/port scope |
+| **TCP Exchange** | Paginated (**20** rows, Show more) | Same idea — keep Session usable |
+| **Follow TCP Stream budget** | **64–2048 KB** (Options slider; default **256 KB**) | Caps reassembled payload + scan; UI shows truncation |
+| **Follow absolute ceiling** | Up to ~**2 MB** payload at max budget | Not unlimited |
+| **Circle Top N** | **10 / 25 / 50** | Filter-then-Top‑N |
+| **Ring capacity** | **64** hosts | Layout / demo stability |
+| **Gauge history** | **60** rate samples | Rolling window |
+
+## Demo Mode
+
+Demo Mode loads **every frame + payload** into memory and replays over ~**60 seconds**, then loops.
+
+- Prefer a **small** demo / sample (tens of KB → a few MB)  
+- Do **not** treat Demo Mode as a path for huge production captures — that spikes RAM and may kill the app  
+
+Use **Open Capture** for real files; use Demo for the built-in story.
+
+## Replay
+
+Tapping the status bar to **Replay** re-walks timing from the loaded file. Cost rises with file length and how much UI work you do during playback. Prefer moderate captures for smooth replay.
 
 ## Data scope & heuristics
 
-- **Conversation vs Sockets** focus changes whether TCP health is IP-pair aggregated or port-specific
-- Client/server without SYN uses a well-known-port heuristic
-- TCP health is a **native estimate** — not Wireshark `tcp.analysis`
+- **Conversation vs Sockets** focus changes whether TCP health is IP-pair aggregated or port-specific  
+- Client/server without SYN uses a well-known-port heuristic  
+- TCP health is a **native estimate** — not Wireshark `tcp.analysis`  
+- MAC analysis mode does not use TCP quality coloring (protocol coloring only)
 
-## iOS constraints
+## Formats & capture reality
 
-- No live capture (offline PCAP/PCAPNG only)
-- Very large files may feel slow or hit memory pressure on older devices
+| Format | Support |
+|---|---|
+| Classic **PCAP** | Yes |
+| **PCAPNG** | Yes |
+| Other wiretap-only formats | Not on iOS App Store builds |
+
+- **No live capture** on device (offline open + Demo only)  
+- Truncated trailing frames (file still growing when copied) are tolerated; analysis may be **partial**
+
+## Practical recommendations
+
+1. Prefer **filtered** captures (by host/port/time) when you care about Decode or Follow TCP Stream.  
+2. Keep iPhone opens in the **~50–200 MB** comfort zone when possible.  
+3. If the circle looks crowded, lower **Top N** or filter protocols/quality grades.  
+4. Raise **Follow TCP Stream budget** only when you need more payload — higher values cost CPU/RAM.  
+5. Use **Sockets** focus when several services share one IP pair and only one may be slow.  
+6. For huge captures, analyze the overview on phone, then finish deep decode on a laptop / Wireshark.
 
 ## Tips
 
