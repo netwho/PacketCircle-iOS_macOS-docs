@@ -6,6 +6,9 @@
 
 PacketCircle Native provides a native **iOS + macOS** UI for exploring network communication pairs from PCAP/PCAPNG captures. It is inspired by (and conceptually evolved from) the original open-source [PacketCircle Wireshark plugin](https://github.com/netwho/PacketCircle).
 
+**Free to use** · **not GPL / not open source** — see [License](./docs/LICENSE.md).  
+We do **not** collect or share your captures — see [Privacy](./docs/PRIVACY.md).
+
 ## Docs
 
 ### iOS
@@ -21,3 +24,11 @@ PacketCircle Native provides a native **iOS + macOS** UI for exploring network c
 - [Limitations (teaser)](./docs/macos/LIMITATIONS.md)
 
 > **Coming soon:** macOS code is not yet available publicly — keep checking back.
+
+### Legal
+- [License](./docs/LICENSE.md)
+- [Privacy Policy](./docs/PRIVACY.md)
+
+---
+
+*Made with love for the packet community.*

@@ -21,3 +21,12 @@ Public documentation for the macOS + iOS PacketCircle Native apps.
 - [Limitations (teaser)](./macos/LIMITATIONS.md)
 
 > Coming soon: macOS code is not yet available publicly.
+
+## Legal
+
+- [License](./LICENSE.md) — free to use, not GPL
+- [Privacy Policy](./PRIVACY.md) — no collection / no sharing of your captures
+
+---
+
+*Made with love for the packet community.*
