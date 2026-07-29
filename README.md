@@ -11,7 +11,7 @@ PacketCircle Native provides a native **iOS + macOS** UI for exploring network c
 </p>
 
 **Free to use** · **not GPL / not open source** — see [License](./docs/LICENSE.md).  
-We do **not** collect or share your captures — see [Privacy](./docs/PRIVACY.md).
+We do **not** collect ANY data — see [Privacy](./docs/PRIVACY.md).
 
 ## Docs
 
