@@ -9,7 +9,7 @@ Public documentation for the macOS + iOS PacketCircle Native apps.
 ## iOS
 
 - [Quickstart](./ios/QUICKSTART.md)
-- [Detailed usage](./ios/DETAILED-USAGE.md)
+- [Detailed usage](./ios/DETAILED-USAGE.md) — Hosts vs Services, Talkers workflows, session/decode
 - [Limitations](./ios/LIMITATIONS.md)
 
 > Disclaimer: iOS is under App Store review and should be available soon.

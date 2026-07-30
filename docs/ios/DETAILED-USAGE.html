@@ -5,49 +5,137 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PacketCircle iOS - Detailed Usage</title>
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 24px auto; max-width: 820px; line-height: 1.45; color: #111; padding: 0 16px; }
-    .logo { display: block; width: 180px; height: 180px; margin: 8px auto 16px; }
-    .shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 16px 0 24px; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 24px auto; max-width: 860px; line-height: 1.5; color: #111; padding: 0 16px; }
+    .logo { display: block; width: 160px; height: 160px; margin: 8px auto 16px; }
+    .shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 16px 0 28px; }
     .shots img { width: 100%; height: auto; border-radius: 10px; border: 1px solid #e5e7eb; }
     .shots figcaption { font-size: 12px; color: #666; text-align: center; margin-top: 4px; }
     .disclaimer { background: #fff8e6; border: 1px solid #f0d78c; border-radius: 8px; padding: 10px 14px; }
+    table { border-collapse: collapse; width: 100%; margin: 12px 0 20px; font-size: 14px; }
+    th, td { border: 1px solid #e5e7eb; padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { background: #f8fafc; }
+    h2 { margin-top: 2rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 6px; }
+    h3 { margin-top: 1.4rem; }
+    code { font-size: 0.92em; background: #f3f4f6; padding: 1px 5px; border-radius: 4px; }
+    blockquote { border-left: 3px solid #94a3b8; margin: 12px 0; padding: 6px 12px; color: #334155; background: #f8fafc; }
+    ol.workflow li { margin-bottom: 4px; }
   </style>
 </head>
 <body>
   <h1>PacketCircle iOS: Detailed Usage</h1>
   <img class="logo" src="../assets/logo.png" alt="PacketCircle" />
   <p class="disclaimer"><strong>Disclaimer:</strong> the iOS release is currently under review by the Apple App Store and should be available soon.</p>
-  <p>Open/replay, Options, Session Details, and Follow TCP Stream.</p>
+  <p>PacketCircle is built for <strong>conversation-first</strong> packet analysis: see who talks to whom, which services matter, where TCP health degrades, then drill into decode and payload — offline from PCAP / PCAPNG.</p>
 
   <h2>Screenshots</h2>
   <div class="shots">
+    <figure><img src="../assets/ios-circle.jpg" alt="Hosts circle"><figcaption>Hosts circle</figcaption></figure>
+    <figure><img src="../assets/ios-services.jpg" alt="Services map"><figcaption>Services map</figcaption></figure>
+    <figure><img src="../assets/ios-gauges.jpg" alt="Gauges"><figcaption>Gauges</figcaption></figure>
     <figure><img src="../assets/ios-session-overview.jpg" alt="Session overview"><figcaption>Session overview</figcaption></figure>
     <figure><img src="../assets/ios-session-health.jpg" alt="TCP health"><figcaption>TCP health</figcaption></figure>
     <figure><img src="../assets/ios-tcp-exchange.jpg" alt="TCP exchange"><figcaption>TCP exchange</figcaption></figure>
     <figure><img src="../assets/ios-app-decode.jpg" alt="Application decode"><figcaption>Application decode</figcaption></figure>
     <figure><img src="../assets/ios-follow-tcp-stream.jpg" alt="Follow TCP Stream"><figcaption>Follow TCP Stream</figcaption></figure>
-    <figure><img src="../assets/ios-options.jpg" alt="Options"><figcaption>Options</figcaption></figure>
+    <figure><img src="../assets/ios-decode.jpg" alt="Decode"><figcaption>Decode</figcaption></figure>
   </div>
 
-  <h2>Options (gear)</h2>
-  <h3>TCP health focus</h3>
+  <h2>Analyst mental model</h2>
+  <ol>
+    <li><strong>Topology</strong> — Circle (Hosts or Services): structure</li>
+    <li><strong>Volume &amp; health</strong> — Gauges + edge coloring: intensity and pain</li>
+    <li><strong>Ranking</strong> — Talkers Top‑N: priority</li>
+    <li><strong>Session</strong> — health, RTT, window, retrans, TLS/ICMP cues</li>
+    <li><strong>Evidence</strong> — Decode / Follow TCP Stream: frames and payload</li>
+  </ol>
+
+  <h2>Circle — two representations</h2>
+  <p>Toggle <strong>Hosts</strong> / <strong>Services</strong> on the Circle tab.</p>
+
+  <h3>Hosts mode</h3>
+  <table>
+    <tr><th>Visual</th><th>Meaning</th></tr>
+    <tr><td>Nodes on the ring</td><td>Unique endpoints (IP or MAC)</td></tr>
+    <tr><td>Edge</td><td>Host↔host conversation</td></tr>
+    <tr><td>Thickness</td><td>Relative volume (packets or bytes)</td></tr>
+    <tr><td>Color · Protocol</td><td>Dominant / display protocol</td></tr>
+    <tr><td>Color · Quality</td><td>TCP session grade</td></tr>
+    <tr><td>Legend chips</td><td>Filter by protocol / related filters</td></tr>
+    <tr><td>Top N</td><td>Only the heaviest pairs are drawn</td></tr>
+  </table>
+  <p><strong>Use when:</strong> host communities, east–west chatter, single-host fan-out.</p>
+
+  <h3>Services mode (bipartite)</h3>
+  <table>
+    <tr><th>Visual</th><th>Meaning</th></tr>
+    <tr><td>Left arc</td><td>Hosts</td></tr>
+    <tr><td>Right column</td><td>Services (HTTP, SSH, FTP, Telnet, SMB, …)</td></tr>
+    <tr><td>Edges</td><td>Host → service only (no host↔host chords)</td></tr>
+    <tr><td>Fan-in / fan-out</td><td>Popular apps vs multi-role stations</td></tr>
+  </table>
+  <p><strong>Use when:</strong> service exposure, cleartext risk (Telnet/FTP), “who touched SMB?”</p>
+  <blockquote>Tip: solo a legend chip before opening Session Details.</blockquote>
+
+  <h2>Gauges</h2>
+  <p>Rate history, top talkers (bytes / packets), and top protocols — a dashboard before a deep dive.</p>
+
+  <h2>Talkers</h2>
+  <p>Ranked Top‑N list with <code>#1…#N</code>, IP filter, and checkboxes.</p>
+  <p>When conversations are checked:</p>
   <ul>
-    <li><strong>Conversation (IP pair)</strong> — aggregated health for the IP pair</li>
-    <li><strong>Sockets (TCP ports)</strong> — port-specific health</li>
+    <li><strong>Copy Filter</strong> — Wireshark display filter (OR of pairs)</li>
+    <li><strong>Show in Decode</strong> — Decode scoped to the selection</li>
+    <li><strong>Save PCAP</strong> — export only matching frames</li>
   </ul>
-  <h3>Quality thresholds</h3>
-  <p>Lenient / Balanced / Strict — changes how the 0–100 score is graded (not the score itself).</p>
-  <h3>Follow TCP Stream budget</h3>
-  <p>Caps reassembly so large streams don’t freeze the UI.</p>
 
   <h2>Session Details</h2>
   <ul>
-    <li><strong>TCP Session Health</strong> — score, window, retrans, RST, zero-window</li>
+    <li><strong>TCP Session Health</strong> — native 0–100 score + grade; RTT, window, retrans, RST/SYN/FIN</li>
+    <li><strong>Conversation vs Sockets</strong> (Options) — pair-aggregated vs port-specific health</li>
     <li><strong>TCP Exchange</strong> — client↔server ladder (paginated)</li>
-    <li><strong>Application decode</strong> — DNS/HTTP/… previews (paginated)</li>
+    <li><strong>Application / TLS / ICMP</strong> — protocol previews when present</li>
+    <li><strong>Follow TCP Stream</strong> — Client red / Server blue; ASCII · Hex · Hex+ASCII; budget in Options</li>
   </ul>
 
-  <h2>Follow TCP Stream</h2>
-  <p>Client = red · Server = blue. Without SYN, direction uses a well-known-port heuristic.</p>
+  <h2>Decode</h2>
+  <p>Capped frame list (Options: 500–10 000, default 5 000) with detail tree and hex. Scope from Session Details or Talkers multi-select.</p>
+
+  <h2>Open / Demo / Replay</h2>
+  <ul>
+    <li><strong>Open Capture</strong> — full offline analyze into aggregates</li>
+    <li><strong>Demo Mode</strong> — timed teaching loop; Stop finishes into a normal analyze</li>
+    <li><strong>Replay</strong> — status bar; original inter-frame timing</li>
+  </ul>
+
+  <h2>Options</h2>
+  <ul>
+    <li>TCP health focus (Conversation / Sockets)</li>
+    <li>Quality thresholds (Lenient / Balanced / Strict) — grade bands only</li>
+    <li>Follow TCP Stream budget (64–2048 KB)</li>
+    <li>Decode frame limit</li>
+  </ul>
+  <p>Circle menu also: IP vs MAC, Packets vs Bytes, Top N, Protocol vs Quality coloring.</p>
+
+  <h2>Suggested workflows</h2>
+  <h3>“What is this capture about?”</h3>
+  <ol class="workflow">
+    <li>Gauges for top protocols / talkers</li>
+    <li>Circle · Services for app exposure</li>
+    <li>Legend filter if noisy</li>
+  </ol>
+  <h3>“Find the sick TCP session”</h3>
+  <ol class="workflow">
+    <li>Color · Quality on Circle</li>
+    <li>Open Fair/Poor edges → Session Details</li>
+    <li>Sockets focus if many ports share a pair</li>
+    <li>Follow Stream or Decode for evidence</li>
+  </ol>
+  <h3>“Export interesting talkers”</h3>
+  <ol class="workflow">
+    <li>Talkers → check ranked rows</li>
+    <li>Save PCAP and/or Copy Filter</li>
+  </ol>
+
+  <p><a href="./QUICKSTART.html">Quickstart</a> · <a href="./LIMITATIONS.html">Limitations</a></p>
 </body>
 </html>

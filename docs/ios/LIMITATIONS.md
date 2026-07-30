@@ -17,8 +17,9 @@ PacketCircle iOS favors responsiveness on phone. There is **no hard-coded maximu
 | **PCAP / PCAPNG size** | ~**50–200 MB** | Larger files may feel slow or get memory-killed on older devices |
 | **Packet count** | Hundreds of thousands | Millions — analysis still streams, but UI work (decode/follow) gets heavy |
 | **Unique conversations (pairs)** | Hundreds → low thousands | Very large pair sets grow RAM (aggregates are kept in memory) |
-| **Circle Top N** | **10 / 25 / 50** (UI) | Only the top N pairs are drawn; others remain in Talkers/analysis |
-| **Hosts on the ring** | Up to **64** stable slots | Extra hosts may not get a permanent ring slot |
+| **Circle Top N** | **10 / 25 / 50** (UI) | Only the top N pairs are drawn (Hosts or Services layout); others remain in Talkers/analysis |
+| **Hosts on the ring** | Up to **64** stable slots | Extra hosts may not get a permanent ring slot (Hosts mode) |
+| **Services layout** | Same Top‑N pairs | Bipartite host→service edges only — denser fan-in can still look busy; use legend filters |
 
 **Rule of thumb:** Circle / Gauges / Talkers scale with **how many unique pairs** you have, not only with file size. A 500 MB capture with few talkers can be fine; a smaller file with huge fan-out of unique IPs can still pressure memory.
 
@@ -83,7 +84,7 @@ Tapping the status bar to **Replay** re-walks timing from the loaded file. Cost 
 
 1. Prefer **filtered** captures (by host/port/time) when you care about Decode or Follow TCP Stream.  
 2. Keep iPhone opens in the **~50–200 MB** comfort zone when possible.  
-3. If the circle looks crowded, lower **Top N** or filter protocols/quality grades.  
+3. If the circle looks crowded, lower **Top N**, switch **Hosts ↔ Services**, or filter protocols/quality grades.  
 4. Raise **Follow TCP Stream budget** only when you need more payload — higher values cost CPU/RAM.  
 5. Use **Sockets** focus when several services share one IP pair and only one may be slow.  
 6. For huge captures, analyze the overview on phone, then finish deep decode on a laptop / Wireshark.

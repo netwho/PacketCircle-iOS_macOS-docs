@@ -28,8 +28,9 @@
     <tr><td><strong>PCAP / PCAPNG size</strong></td><td>~50–200 MB</td><td>Larger files may feel slow or get memory-killed on older devices</td></tr>
     <tr><td><strong>Packet count</strong></td><td>Hundreds of thousands</td><td>Millions — analysis streams, but decode/follow get heavy</td></tr>
     <tr><td><strong>Unique conversations (pairs)</strong></td><td>Hundreds → low thousands</td><td>Very large pair sets grow RAM</td></tr>
-    <tr><td><strong>Circle Top N</strong></td><td>10 / 25 / 50</td><td>Only top N pairs are drawn</td></tr>
-    <tr><td><strong>Hosts on the ring</strong></td><td>Up to 64 stable slots</td><td>Extra hosts may not get a permanent slot</td></tr>
+    <tr><td><strong>Circle Top N</strong></td><td>10 / 25 / 50</td><td>Only top N pairs are drawn (Hosts or Services)</td></tr>
+    <tr><td><strong>Hosts on the ring</strong></td><td>Up to 64 stable slots</td><td>Extra hosts may not get a permanent slot (Hosts mode)</td></tr>
+    <tr><td><strong>Services layout</strong></td><td>Same Top‑N pairs</td><td>Host→service edges only; use legend filters if busy</td></tr>
   </table>
   <p><strong>Rule of thumb:</strong> Circle / Gauges / Talkers scale with <strong>how many unique pairs</strong> you have, not only with file size.</p>
 
@@ -75,7 +76,7 @@
   <ol>
     <li>Prefer filtered captures for Decode / Follow TCP Stream.</li>
     <li>Keep opens in the ~50–200 MB comfort zone when possible.</li>
-    <li>Lower Top N or filter protocols if the circle feels crowded.</li>
+    <li>Lower Top N, switch Hosts ↔ Services, or filter protocols if the circle feels crowded.</li>
     <li>Raise Follow budget only when needed.</li>
     <li>Use Sockets focus to isolate a slow service on a shared IP pair.</li>
     <li>For huge captures: overview on phone, deep decode on laptop / Wireshark.</li>
