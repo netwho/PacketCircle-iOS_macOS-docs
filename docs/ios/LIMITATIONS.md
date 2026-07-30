@@ -39,7 +39,7 @@ Opening a capture **streams** frames from disk. PacketCircle keeps **aggregates 
 
 | Feature | Limit | Notes |
 |---|---|---|
-| **Decode list** | **2 500** frames | Rest of the file is ignored for that Decode view |
+| **Decode list** | **500–10 000** frames (Options; default **5 000**) | Rest of the file is ignored for that Decode view |
 | **Session → Application decode** | Paginated (**20** rows, Show more); load capped (~**200** frames) | Use pair/port scope |
 | **TCP Exchange** | Paginated (**20** rows, Show more) | Same idea — keep Session usable |
 | **Follow TCP Stream budget** | **64–2048 KB** (Options slider; default **256 KB**) | Caps reassembled payload + scan; UI shows truncation |
