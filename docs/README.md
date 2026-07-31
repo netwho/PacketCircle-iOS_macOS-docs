@@ -8,6 +8,7 @@ Public documentation for the macOS + iOS PacketCircle Native apps.
 
 ## iOS
 
+- **[User Manual](./ios/USER-MANUAL.md)** — background, functions, options, workflows, and current Simulator screenshots
 - [Quickstart](./ios/QUICKSTART.md)
 - [Detailed usage](./ios/DETAILED-USAGE.md) — Hosts vs Services, Talkers workflows, session/decode
 - [Limitations](./ios/LIMITATIONS.md)

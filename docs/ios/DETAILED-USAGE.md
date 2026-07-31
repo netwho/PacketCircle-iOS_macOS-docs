@@ -6,6 +6,8 @@
 
 > **Disclaimer:** the iOS release is currently under review by the Apple App Store and should be available soon.
 
+> For the current build walkthrough with fresh Simulator screenshots, see the **[User Manual](USER-MANUAL.md)**.
+
 PacketCircle is built for **conversation-first** packet analysis: see who talks to whom, which services matter, where TCP health degrades, then drill into decode and payload when needed — all offline from PCAP / PCAPNG.
 
 This guide explains the **representations**, **controls**, and **analyst workflows** behind each tab.
