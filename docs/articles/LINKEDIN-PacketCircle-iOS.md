@@ -38,7 +38,7 @@ So this is less "startup" and more "the itch came back." I wanted the circle on 
 
 I'm not a "real" developer. I pay the bills as a consultant, and I've had an Apple Developer account for *years* — used almost entirely to wrap and sign other people's apps for MAM/MDM distribution. Never to actually **build** something. PacketCircle for iPhone was my excuse to finally get my hands dirty with **Xcode**, **Swift** and **SwiftUI**.
 
-And like most of my side projects: **yes, this one is AI-assisted.** I built it with **Cursor** riding shotgun. I'm not going to be coy about it — and I'm not undervaluing writing the code either. Getting a native app to compile and behave is real work. What still eats the calendar, though, is the stuff AI can't invent for you: **information modeling** and **visualization that fits a small screen** — which metrics belong on the circle vs. in Session details, how TCP health should read at a glance, what a thumb-sized workflow looks like when you're actually troubleshooting. If you don't understand the metrics representation and the analyst's path through the UI, you just get a pretty toy. **I hope people really find PacketCircle useful.**
+And like most of my side projects: **yes, this one is AI-assisted.** I built it with **Cursor** riding shotgun. I'm not going to be coy about it — and I'm not undervaluing writing the code either. Getting a native app to compile and behave is real work. What still eats the calendar, though, is the stuff AI can't invent for you: **information modeling** and **visualization that fits a small screen** — which metrics belong on the circle vs. in Session details, how TCP health should read at a glance, what a thumb-sized workflow looks like when you're actually troubleshooting. If you don't understand the metrics representation and the analyst's path through the UI, you just get a pretty toy. **I hope people really find PacketCircle useful — more than a toy. ;-)**
 
 <p align="center">
   <img src="../assets/ios-home.jpg" alt="Home screen: Guided tour, Open Capture, Demo Mode" width="300">
@@ -203,6 +203,8 @@ A few questions I already know you'll ask:
 - **Original Wireshark plugin (GPL):** https://github.com/netwho/PacketCircle  
 
 Built by one packet nerd, for the packet community — with a lot of Cursor and a little obsession with circles.
+
+Feedback — here on LinkedIn or on the [docs GitHub](https://github.com/netwho/PacketCircle-iOS_macOS-docs) — helps a lot. What works, what’s missing, tablet use case or not: tell me.
 
 ---
 
