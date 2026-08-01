@@ -30,7 +30,7 @@ Native Swift. Offline PCAP/PCAPNG. No ads, no subscriptions, no telemetry — an
 
 ### It (still) starts with a circle
 
-I have a mildly unreasonable love for one idea: draw network conversations as a **circle**. Who talks to whom, which protocols, which edges run hot. Last year ago that turned into **[PacketCircle](https://github.com/netwho/PacketCircle)**, an open-source **Wireshark plugin**. The mental model never let go of me — once you *see* traffic as a ring of relationships, packet lists feel like reading a phone book to find a party.
+I have a mildly unreasonable love for one idea: draw network conversations as a **circle**. Who talks to whom, which protocols, which edges run hot. Last year that turned into **[PacketCircle](https://github.com/netwho/PacketCircle)**, an open-source **Wireshark plugin**. The mental model never let go of me — once you *see* traffic as a ring of relationships, packet lists feel like reading a phone book to find a party.
 
 So this is less "startup" and more "the itch came back." I wanted the circle on the one screen that's always in my pocket.
 
