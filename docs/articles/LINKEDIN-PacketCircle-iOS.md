@@ -29,7 +29,7 @@ I have a mildly unreasonable love for one idea: draw network conversations as a 
 
 So this is less "startup" and more "the itch came back." I wanted the circle on the one screen that's always in my pocket.
 
-### The confession up front: this is a learning project (and AI helped)
+### The confession up front: this is a learning project
 
 I'm not a "real" developer. I pay the bills as a consultant, and I've had an Apple Developer account for *years* — used almost entirely to wrap and sign other people's apps for MAM/MDM distribution. Never to actually **build** something. PacketCircle for iPhone was my excuse to finally get my hands dirty with **Xcode**, **Swift** and **SwiftUI**.
 
