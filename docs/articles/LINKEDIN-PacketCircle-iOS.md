@@ -1,7 +1,7 @@
 # LinkedIn article draft — PacketCircle for iPhone
 
 > **Status:** Draft for LinkedIn (release-candidate voice — personal, a little nerdy, honest).  
-> **Images:** Upload the files under `docs/assets/` where marked `[IMAGE: …]` (LinkedIn does not embed GitHub paths — paste screenshots manually when publishing).  
+> **Images:** The screenshots below render here on GitHub from `docs/assets/` (iPhone Simulator captures). LinkedIn cannot embed GitHub paths — upload the same files manually at each matching spot when publishing.  
 > **Tone:** Walter's story → the deal → what it does → use cases → what's next. Cut freely if it runs long for your feed.
 
 ---
@@ -19,7 +19,9 @@ Native Swift. Offline PCAP/PCAPNG. No ads, no subscriptions, no telemetry — an
 
 ## Article body
 
-[IMAGE: logo.png — small, optional]
+<p align="center">
+  <img src="../assets/logo.png" alt="PacketCircle logo" width="140">
+</p>
 
 ### It (still) starts with a circle
 
@@ -33,7 +35,9 @@ I'm not a "real" developer. I pay the bills as a consultant, and I've had an App
 
 And like most of my side projects: **yes, this one is AI-assisted.** I built it with **Cursor** riding shotgun. I'm not going to be coy about it — the interesting part wasn't typing every line, it was deciding what the thing should *be* and where to draw the boundaries. More on those boundaries below.
 
-[IMAGE: ios-home.jpg — Home: Open Capture / Demo Mode]
+<p align="center">
+  <img src="../assets/ios-home.jpg" alt="Home screen: Guided tour, Open Capture, Demo Mode" width="300">
+</p>
 
 ### The deal (this is the part I actually care about)
 
@@ -56,7 +60,10 @@ For an iPhone app that normal humans can actually install, the **App Store is ba
 
 The upside of that constraint: the decodes are mine, they're limited on purpose, and I can put them on the Store with a clear conscience.
 
-[IMAGE: ios-readme-hero.jpg or ios-circle.jpg — Circle + conversation card + LIVE DEMO]
+<p align="center">
+  <img src="../assets/ios-circle.jpg" alt="Circle view: node-to-node conversations with protocol legend" width="300">
+  <img src="../assets/ios-services.jpg" alt="Services view: hosts on the left, services on the right" width="300">
+</p>
 
 ### What it actually does today
 
@@ -77,9 +84,11 @@ No file handy? There's a **built-in demo** capture that replays as a one-minute 
 7. Tap the **status bar** (filename · packets · pairs) to **replay** with original timing.  
 8. Open the **ⓘ About** and the **Options** gear for the guided tour, quality bands, IP-pair vs TCP-socket focus, and the stream budget.
 
-[IMAGE: ios-gauges.jpg]  
-[IMAGE: ios-decode.jpg]  
-[IMAGE: ios-options.jpg]
+<p align="center">
+  <img src="../assets/ios-gauges.jpg" alt="Gauges: packet/byte/error rates, top talkers and protocols" width="270">
+  <img src="../assets/ios-decode.jpg" alt="Decode: packet list, details tree and hex dump" width="270">
+  <img src="../assets/ios-options.jpg" alt="Options: guided tour, session focus, quality thresholds" width="270">
+</p>
 
 ---
 
@@ -101,11 +110,15 @@ No file handy? There's a **built-in demo** capture that replays as a one-minute 
 | **Guided tour** | 60-second walkthrough from circle → conversation → packets |
 | **Privacy** | Everything stays **on device** — no upload, no telemetry, ever |
 
-[IMAGE: ios-session-health.jpg]  
-[IMAGE: ios-session-charts.jpg — quality line charts: RTT, packet size, inter-arrival]  
-[IMAGE: ios-tcp-exchange.jpg]  
-[IMAGE: ios-follow-tcp-stream.jpg]  
-[IMAGE: ios-app-decode.jpg]
+<p align="center">
+  <img src="../assets/ios-session-health.jpg" alt="TCP session health: poor score with retransmissions and zero-window events" width="270">
+  <img src="../assets/ios-session-charts.jpg" alt="Quality charts: ACK round trip, packet size and inter-arrival line graphs" width="270">
+  <img src="../assets/ios-tcp-exchange.jpg" alt="TCP exchange ladder: client and server segments with ACKs" width="270">
+</p>
+<p align="center">
+  <img src="../assets/ios-follow-tcp-stream.jpg" alt="Follow TCP Stream: reassembled FTP session with client/server coloring" width="270">
+  <img src="../assets/ios-app-decode.jpg" alt="Application decode: Telnet messages with plain-text payload" width="270">
+</p>
 
 ---
 
@@ -176,7 +189,7 @@ Built by one packet nerd, for the packet community — with a lot of Cursor and 
 ## Publishing checklist
 
 - [ ] Paste title + body into a LinkedIn Article (or long post)  
-- [ ] Upload screenshots at each `[IMAGE: …]` mark (order above works well)  
+- [ ] Upload the screenshots from `docs/assets/` at each matching spot (order above works well)  
 - [ ] Link docs + plugin repos  
 - [ ] Say "App Store review / coming soon"  
 - [ ] Keep the AI-assist line — it's honest and it's on-brand  
