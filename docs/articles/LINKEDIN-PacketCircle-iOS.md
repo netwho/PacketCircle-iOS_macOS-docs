@@ -99,7 +99,7 @@ No file handy? There's a **built-in demo** capture that replays as a one-minute 
 <p align="center">
   <img src="../assets/ios-gauges.jpg" alt="Gauges: packet/byte/error rates, top talkers and protocols" width="270">
   <img src="../assets/ios-decode.jpg" alt="Decode: packet list, details tree and hex dump" width="270">
-  <img src="../assets/ios-options.jpg" alt="Options: guided tour, session focus, quality thresholds" width="270">
+  <img src="../assets/ios-talkers.jpg" alt="Talkers: conversation list with protocol badges and TCP health grades" width="270">
 </p>
 
 ---
@@ -133,7 +133,7 @@ No file handy? There's a **built-in demo** capture that replays as a one-minute 
 <p align="center">
   <img src="../assets/ios-follow-tcp-stream.jpg" alt="Follow TCP Stream: reassembled FTP session with client/server coloring" width="270">
   <img src="../assets/ios-app-decode.jpg" alt="Application decode: Telnet messages with plain-text payload" width="270">
-  <img src="../assets/ios-talkers.jpg" alt="Talkers: conversation list with protocol badges and TCP health grades" width="270">
+  <img src="../assets/ios-options.jpg" alt="Options: guided tour, session focus, quality thresholds" width="270">
 </p>
 
 ---
