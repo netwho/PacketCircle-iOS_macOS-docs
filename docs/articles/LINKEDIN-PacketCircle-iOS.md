@@ -66,13 +66,20 @@ For an iPhone app that normal humans can actually install, the **App Store is ba
 The upside of that constraint: the decodes are mine, they're limited on purpose, and I can put them on the Store with a clear conscience.
 
 <p align="center">
-  <img src="../assets/ios-circle.jpg" alt="Circle view: node-to-node conversations with protocol legend" width="300">
-  <img src="../assets/ios-services.jpg" alt="Services view: hosts on the left, services on the right" width="300">
+  <img src="../assets/ios-circle.jpg" alt="Circle view: node-to-node conversations colored by protocol" width="270">
+  <img src="../assets/ios-services.jpg" alt="Services view: hosts on the left, services on the right" width="270">
+  <img src="../assets/ios-quality.jpg" alt="Quality view: same hosts ring, edges colored by TCP session health" width="270">
 </p>
 
 ### What it actually does today
 
-Load a capture, and PacketCircle turns it into a **circle** of talkers you can poke at with your thumb: tap a node or an edge, filter by protocol chips, then drill into **session health**, skim a **decode** tree, or **follow a TCP stream** — all on the phone.
+Load a capture, and PacketCircle turns it into a **circle** of talkers you can poke at with your thumb: tap a node or an edge, filter by the legend chips, then drill into **session health**, skim a **decode** tree, or **follow a TCP stream** — all on the phone.
+
+Two switches on the circle change what you're *looking for*:
+
+- **Color → Protocol** paints edges by application (HTTP, SSH, DNS…). Good for “who talks which language.”
+- **Color → Quality** paints the *same* host nodes by native TCP session health — Excellent / Good / Fair / Poor. Sick conversations light up red without opening Wireshark. The legend chips become grade filters, so you can solo Poor and hide the noise.
+- **Hosts vs Services** rearranges the ring: hosts around the rim (node-to-node), or hosts on one side and service ports on the other (who speaks HTTP/SSH/…).
 
 No file handy? There's a **built-in demo** capture that replays as a one-minute loop so you can see the whole thing move without a lab network.
 
@@ -81,7 +88,7 @@ No file handy? There's a **built-in demo** capture that replays as a one-minute 
 ### The 2-minute tour
 
 1. **Open** a capture or hit **Demo Mode**.  
-2. Play in the **Circle**: tap nodes/edges, use the protocol chips as legend *and* filter.  
+2. Play in the **Circle**: tap nodes/edges; flip **Color** between Protocol and Quality; use the legend chips as filter. Hosts vs Services rearranges the ring.  
 3. Peek at **Gauges** for rates and top talkers/protocols.  
 4. Browse **Talkers** for the conversation list, or **Decode** for frames + details/hex.  
 5. Open **Session details** for TCP health, the exchange ladder, and app decode.  
@@ -103,7 +110,7 @@ No file handy? There's a **built-in demo** capture that replays as a one-minute 
 |------|----------------|
 | **Open** | PCAP / PCAPNG from Files / share sheet — fully offline |
 | **Demo** | Bundled demo capture, ~1‑minute loop, replayable |
-| **Circle** | Conversation graph, protocol colors, Top‑N focus |
+| **Circle** | Conversation graph; Protocol *or* Quality edge colors; Hosts / Services layout; Top‑N focus |
 | **Gauges** | Packet/byte/error rates, top talkers & protocols |
 | **Talkers** | Conversation list |
 | **Decode** | Packet list, details tree, hex/ASCII (capped frames) |
@@ -130,7 +137,7 @@ No file handy? There's a **built-in demo** capture that replays as a one-minute 
 ### The use cases that make people lean in
 
 **1. "Just show me who's talking."**  
-You grabbed a PCAP off a SPAN/TAP/laptop. On the train home — or mid-meeting — open it on the phone and *see* the conversation map: who dominates, which protocols, which pair looks sick with retransmits, RSTs and a bad health score. No laptop, no boot time.
+You grabbed a PCAP off a SPAN/TAP/laptop. On the train home — or mid-meeting — open it on the phone and *see* the conversation map. Flip to **Quality** coloring and the sick pairs light up red (retransmits, RSTs, zero-window, poor score) without leaving the circle. No laptop, no boot time.
 
 **2. Teaching without a lab.**  
 Demo Mode is a story told in a circle — HTTP, DNS, SSH, Telnet, SMB, all lit up. Perfect for showing a junior (or a skeptical manager) what "conversation-first" troubleshooting means, without wiring up a network.
