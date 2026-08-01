@@ -1,5 +1,10 @@
 # LinkedIn article draft — PacketCircle for iPhone
 
+<p align="center">
+  <img src="../assets/linkedin-banner.jpg" alt="PacketCircle for iPhone — your PCAPs as a circle" width="100%">
+</p>
+
+> **Cover image:** `docs/assets/linkedin-banner.jpg` — 1920 × 1080 (LinkedIn's recommended article cover size). Upload it as the article cover when publishing.  
 > **Status:** Draft for LinkedIn (release-candidate voice — personal, a little nerdy, honest).  
 > **Images:** The screenshots below render here on GitHub from `docs/assets/` (iPhone Simulator captures). LinkedIn cannot embed GitHub paths — upload the same files manually at each matching spot when publishing.  
 > **Tone:** Walter's story → the deal → what it does → use cases → what's next. Cut freely if it runs long for your feed.
@@ -203,6 +208,7 @@ Attach the article link LinkedIn generates when you publish.
 
 ## Publishing checklist
 
+- [ ] Set `linkedin-banner.jpg` (1920 × 1080) as the article cover image  
 - [ ] Paste title + body into a LinkedIn Article (or long post)  
 - [ ] Share with the companion post below (or paste it when LinkedIn asks)  
 - [ ] Upload the screenshots from `docs/assets/` at each matching spot (order above works well)  
