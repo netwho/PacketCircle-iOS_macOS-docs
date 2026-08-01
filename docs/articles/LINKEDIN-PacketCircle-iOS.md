@@ -1,19 +1,19 @@
 # LinkedIn article draft — PacketCircle for iPhone
 
-> **Status:** Draft for LinkedIn  
+> **Status:** Draft for LinkedIn (release-candidate voice — personal, a little nerdy, honest).  
 > **Images:** Upload the files under `docs/assets/` where marked `[IMAGE: …]` (LinkedIn does not embed GitHub paths — paste screenshots manually when publishing).  
-> **Tone:** Personal engineering story → product → use cases. Soften or cut anything that feels too long for your audience.
+> **Tone:** Walter's story → the deal → what it does → use cases → what's next. Cut freely if it runs long for your feed.
 
 ---
 
 ## Suggested title options
 
-1. From a Wireshark plugin to an iPhone packet circle  
-2. PacketCircle on iOS: conversation graphs in your pocket  
-3. Why I built a native Swift packet analyzer for iPhone (and what it can’t do)
+1. I have a thing for circles — so I put a packet analyzer on my iPhone  
+2. PacketCircle for iPhone: your PCAPs as a circle, in your pocket, for free  
+3. From a Wireshark plugin to a native Swift iPhone app (and everything I learned saying "no" to live capture)
 
 **Suggested subtitle / first line:**  
-Native Swift. Shared core with macOS. Offline PCAP/PCAPNG — no live capture on device (and why).
+Native Swift. Offline PCAP/PCAPNG. No ads, no subscriptions, no telemetry — and yes, no live sniffing (I'll explain why).
 
 ---
 
@@ -21,49 +21,61 @@ Native Swift. Shared core with macOS. Offline PCAP/PCAPNG — no live capture on
 
 [IMAGE: logo.png — small, optional]
 
-### From Wireshark plugin to iPhone
+### It (still) starts with a circle
 
-It started with **[PacketCircle](https://github.com/netwho/PacketCircle)** — an open-source **Wireshark plugin** that draws communication pairs as a circle: who talks to whom, which protocols, how “hot” the edges are. That mental model stuck with me.
+I have a mildly unreasonable love for one idea: draw network conversations as a **circle**. Who talks to whom, which protocols, which edges run hot. Years ago that turned into **[PacketCircle](https://github.com/netwho/PacketCircle)**, an open-source **Wireshark plugin**. The mental model never let go of me — once you *see* traffic as a ring of relationships, packet lists feel like reading a phone book to find a party.
 
-Out of curiosity I began a **standalone macOS** version: native **Swift** libraries for PCAP/PCAPNG (no Wireshark wiretap/dumpcap in the default build) and **SwiftUI** for the UI. With a lot of experimentation — and yes, some AI help on the build and plumbing — I eventually got a Mac app that opens captures and draws the circle. The GUI already feels cleaner than the Qt-ish plugin chrome. Functionality-wise, though, the native Mac build is still **far behind** the plugin and **not ready to share** as a finished product.
+So this is less "startup" and more "the itch came back." I wanted the circle on the one screen that's always in my pocket.
 
-Then I got deeper into Xcode and Swift and had the slightly crazy idea: **what about iPhone?**  
-The analysis engine — pair aggregation, protocol coloring, TCP session health, stream follow — could be a **shared core** between macOS and iOS. I still had an Apple Developer account from years of wrapping and signing apps for mobile device management. So I tried it.
+### The confession up front: this is a learning project (and AI helped)
 
-### The hard lesson: no live capture on iOS
+I'm not a "real" developer. I pay the bills as a consultant, and I've had an Apple Developer account for *years* — used almost entirely to wrap and sign other people's apps for MAM/MDM distribution. Never to actually **build** something. PacketCircle for iPhone was my excuse to finally get my hands dirty with **Xcode**, **Swift** and **SwiftUI**.
 
-One thing became clear quickly: **forget capturing Wi‑Fi / the network interface from a normal App Store iPhone app.**
-
-People sometimes talk about “cheating” with VPN/tunnel APIs to see packets. Even if you get that working technically, the **only** realistic path to users is the **App Store** — and Apple’s review will not bless a capture hack like that. So PacketCircle for iOS is honest about the boundary:
-
-- **Open** PCAP / PCAPNG from Files / AirDrop  
-- Or run the **built-in demo** capture and watch the circle build  
-- **No** on-device live sniffing  
-
-I’m looking at a future path for “almost live” analysis: **remote capture delivery**, for example **ERSPAN** (mirrored traffic inside GRE) landing as PCAP streams you can open on the phone — still without pretending the phone is a tap.
+And like most of my side projects: **yes, this one is AI-assisted.** I built it with **Cursor** riding shotgun. I'm not going to be coy about it — the interesting part wasn't typing every line, it was deciding what the thing should *be* and where to draw the boundaries. More on those boundaries below.
 
 [IMAGE: ios-home.jpg — Home: Open Capture / Demo Mode]
 
-### What it is today
+### The deal (this is the part I actually care about)
 
-**PacketCircle iOS** is an offline conversation analyzer: load a capture, see talkers on a **circle**, drill into **session health**, skim **decode**, and **follow a TCP stream** — on a phone, with a UI built for touch.
+Because I'm tired of opening the App Store and finding a flashlight that wants a subscription and my location data, here's the whole contract for PacketCircle on iPhone:
 
-The same **PacketCircleCore** powers both Apple platforms. iOS is the shareable, reviewable slice of that work while the Mac app catches up in features.
+- **Free.** Not "free trial." Free.
+- **No ads.**
+- **No in-app purchases.** Nothing is locked behind a paywall.
+- **No telemetry.** I don't phone home. I don't want your data — honestly, keeping it would just be a liability.
+- **100% offline.** Put PCAPs in your iPhone storage (Files / AirDrop / share sheet) and it works with the network turned off entirely.
+
+Why free? The honest answer: I don't need PacketCircle to pay rent — consulting does that. The slightly grumpier answer: the App Store is drowning in subscriptions, ad SDKs and data lakes, and I wanted to drop one small thing into it that's just… a tool. If it saves you ten minutes, **buy me a coffee and send good karma — I'm good.** ☕
+
+### Why the App Store at all (and why there's no open-source inside)
+
+For an iPhone app that normal humans can actually install, the **App Store is basically the only reasonable door.** Sideloading and enterprise tricks aren't a real distribution story for a tool like this. So App Store it is — which shaped two decisions:
+
+1. **No live capture on iOS.** You can't sniff the Wi‑Fi/interface from a sandboxed App Store app, and the VPN/tunnel "cheats" people whisper about won't survive review anyway. Rather than fight it, PacketCircle is honest: it's an **offline analyzer** for captures you already have.
+2. **No open-source dissection code shipped.** The original plugin lives in GPL land. Mixing **GPL v2 with App Store distribution** is a famous legal rabbit hole, and I'll admit it plainly: **I haven't chased down every detail.** So instead of guessing, I removed the temptation entirely — no libwiretap, no borrowed GPL dissectors. The iOS app is **clean, native Swift** end to end. Less code coverage than Wireshark, sure, but zero license landmines.
+
+The upside of that constraint: the decodes are mine, they're limited on purpose, and I can put them on the Store with a clear conscience.
 
 [IMAGE: ios-readme-hero.jpg or ios-circle.jpg — Circle + conversation card + LIVE DEMO]
 
+### What it actually does today
+
+Load a capture, and PacketCircle turns it into a **circle** of talkers you can poke at with your thumb: tap a node or an edge, filter by protocol chips, then drill into **session health**, skim a **decode** tree, or **follow a TCP stream** — all on the phone.
+
+No file handy? There's a **built-in demo** capture that replays as a one-minute loop so you can see the whole thing move without a lab network.
+
 ---
 
-### How to use it (2-minute tour)
+### The 2-minute tour
 
-1. **Open** a capture or start **Demo Mode**.  
-2. Explore the **Circle**: tap a node or edge; use the protocol chips as a legend/filter.  
-3. Check **Gauges** for rates, top talkers, top protocols.  
-4. Open **Talkers** for a list of pairs, or **Decode** for a frame list + details/hex.  
-5. Open **Session details** for TCP health, exchange ladder, and application decode.  
-6. Use **Follow TCP Stream** when you need the reassembled payload (ASCII/hex), with a budget so the phone doesn’t freeze on huge streams.  
-7. Tap the **status bar** (filename · packets · pairs) if you want to **replay** with original timing.  
-8. Open **Options** (gear) for quality thresholds, session focus (IP pair vs TCP socket), and stream budget.
+1. **Open** a capture or hit **Demo Mode**.  
+2. Play in the **Circle**: tap nodes/edges, use the protocol chips as legend *and* filter.  
+3. Peek at **Gauges** for rates and top talkers/protocols.  
+4. Browse **Talkers** for the conversation list, or **Decode** for frames + details/hex.  
+5. Open **Session details** for TCP health, the exchange ladder, and app decode.  
+6. **Follow TCP Stream** when you want the reassembled payload (ASCII/hex) — with a budget so your phone doesn't melt on a 2 GB elephant.  
+7. Tap the **status bar** (filename · packets · pairs) to **replay** with original timing.  
+8. Open the **ⓘ About** and the **Options** gear for the guided tour, quality bands, IP-pair vs TCP-socket focus, and the stream budget.
 
 [IMAGE: ios-gauges.jpg]  
 [IMAGE: ios-decode.jpg]  
@@ -75,86 +87,98 @@ The same **PacketCircleCore** powers both Apple platforms. iOS is the shareable,
 
 | Area | What you get |
 |------|----------------|
-| **Open** | PCAP / PCAPNG from Files / share sheet |
-| **Demo** | Bundled demo capture, ~1‑minute loop |
-| **Circle** | Communication graph, protocol colors, Top‑N style focus |
-| **Gauges** | Packets/bytes/errors style rates, top talkers & protocols |
+| **Open** | PCAP / PCAPNG from Files / share sheet — fully offline |
+| **Demo** | Bundled demo capture, ~1‑minute loop, replayable |
+| **Circle** | Conversation graph, protocol colors, Top‑N focus |
+| **Gauges** | Packet/byte/error rates, top talkers & protocols |
 | **Talkers** | Conversation list |
 | **Decode** | Packet list, details tree, hex/ASCII (capped frames) |
-| **Session details** | Pair summary, TCP session health score & metrics |
+| **Session details** | Pair summary + native TCP session-health score & metrics |
 | **TCP exchange** | Client↔server ladder of segments/ACKs |
-| **Application decode** | Lightweight previews (e.g. DNS/HTTP) |
+| **Application decode** | Lightweight previews (e.g. DNS/HTTP/Telnet) |
 | **Follow TCP Stream** | Reassembly, direction filters, ASCII/hex (budget-capped) |
-| **Replay** | Tap status bar → replay with original timing |
-| **Options** | Quality bands (lenient/balanced/strict), IP-pair vs socket focus, stream budget |
-| **Privacy** | Analysis stays **on device** — we don’t collect or upload your captures |
+| **Replay** | Tap the status bar → replay with original timing |
+| **Guided tour** | 60-second walkthrough from circle → conversation → packets |
+| **Privacy** | Everything stays **on device** — no upload, no telemetry, ever |
 
 [IMAGE: ios-session-health.jpg]  
+[IMAGE: ios-session-charts.jpg — quality line charts: RTT, packet size, inter-arrival]  
 [IMAGE: ios-tcp-exchange.jpg]  
 [IMAGE: ios-follow-tcp-stream.jpg]  
 [IMAGE: ios-app-decode.jpg]
 
 ---
 
-### Use cases
+### The use cases that make people lean in
 
-**1. Field / change window — “show me the talkers”**  
-You grabbed a PCAP on a span/TAP/laptop. On the way back (or in a meeting), open it on the phone: who is chatting with whom, which protocols dominate, which pair looks sick (retransmits, RSTs, poor score).
+**1. "Just show me who's talking."**  
+You grabbed a PCAP off a SPAN/TAP/laptop. On the train home — or mid-meeting — open it on the phone and *see* the conversation map: who dominates, which protocols, which pair looks sick with retransmits, RSTs and a bad health score. No laptop, no boot time.
 
-**2. Teaching & demos**  
-Demo Mode is a story in a circle: HTTP, DNS, SSH, etc., without needing a lab network on the phone. Great for explaining conversation-centric troubleshooting to juniors or non-Wireshark specialists.
+**2. Teaching without a lab.**  
+Demo Mode is a story told in a circle — HTTP, DNS, SSH, Telnet, SMB, all lit up. Perfect for showing a junior (or a skeptical manager) what "conversation-first" troubleshooting means, without wiring up a network.
 
-**3. Pre-filter before Wireshark**  
-Use the circle and Talkers to find the interesting IP pair / port, then jump to full Wireshark on a laptop with a display filter. PacketCircle is the map; Wireshark remains the microscope.
+**3. The map before the microscope.**  
+Use the circle and Talkers to spot the interesting IP pair/port, *then* jump to full Wireshark on a laptop with a proper display filter. PacketCircle finds the needle; Wireshark dissects it.
 
-**4. TCP health triage**  
-Session details surface a **native** health estimate (not Wireshark `tcp.analysis`): window, retransmissions, RST, SYN/FIN. Optionally focus **per TCP socket** when several services share the same IP pair — so one slow HTTPS port doesn’t hide behind a healthy SSH session.
+**4. TCP health triage in your hand.**  
+Session details give a **native** health estimate (not Wireshark `tcp.analysis`): window, retransmissions, RST, SYN/FIN, **zero-window** events. Focus **per TCP socket** so one sick HTTPS port can't hide behind a perfectly healthy SSH session on the same IP pair.
 
-**5. Payload peek without a laptop**  
-Follow TCP Stream for Telnet/HTTP-ish text, with client/server coloring. Caps exist on purpose — phones aren’t desktops; Options lets you raise the budget when you need more.
+**5. Payload peek, no laptop required.**  
+Follow TCP Stream for Telnet/HTTP-ish text with client/server coloring. The caps are deliberate — a phone isn't a workstation — and Options lets you raise the budget when you mean it.
 
-**6. Air-gapped / customer site**  
-No cloud account, no upload of customer PCAPs to “our” servers. Open the file, analyze locally, delete when done. (See our privacy policy in the docs repo.)
+**6. Customer site / air-gapped, guilt-free.**  
+No cloud account, no "upload your customer's PCAP to our servers." Open locally, analyze locally, delete when done. What happens on the phone stays on the phone.
 
 ---
 
-### What it is *not*
+### What it is honestly *not*
 
-- Not a replacement for Wireshark’s full dissector tree  
-- Not a live Wi‑Fi sniffer on iPhone  
-- Not the mature Mac product (yet) — Mac UI is nicer than the plugin’s Qt feel; **feature parity is still behind**  
-- Not GPL: the **plugin** stays GPL; the **Native** apps are free to use but proprietary (see license in the docs)
+- **Not** a replacement for Wireshark's full dissector tree — the decodes are native and intentionally lightweight.  
+- **Not** a live Wi‑Fi sniffer on iPhone. See above; I'm not fighting Apple review.  
+- **Not** a mobile clone of the plugin — different codebase, different (smaller) coverage, nicer touch UI.  
+- **Not** open source on iOS — clean-room native Swift, precisely so it *can* live on the Store.
+
+---
+
+### For the curious / future dev
+
+A few questions I already know you'll ask:
+
+- **"Is there a Mac version?"** Yes — thanks to Swift/SwiftUI sharing the core, a **macOS** build already runs on my machine. It's still catching up in features, so **no release date yet.** It'll show up when it's not embarrassing.
+- **"Android?"** No idea yet. I'll at least go find out what it would take — different language, different capture story, different store politics. Consider it "researching," not "promising."
+- **"iPad / tablet support?"** Genuinely unsure. The extra screen real estate would suit the circle nicely — but is analyzing PCAPs on a tablet a real workflow for you, or a nice-to-have? **Tell me.** That feedback would actually move it up the list.
 
 ---
 
 ### Status & links
 
-- **iOS:** under **App Store review** — should be available soon  
-- **macOS Native:** private / work-in-progress teaser only  
+- **iOS:** heading into **App Store review** — should be live soon.  
+- **macOS Native:** private work-in-progress; teaser only.  
 - **Docs (public):** https://github.com/netwho/PacketCircle-iOS_macOS-docs  
-- **Original Wireshark plugin:** https://github.com/netwho/PacketCircle  
+- **Original Wireshark plugin (GPL):** https://github.com/netwho/PacketCircle  
 
-Made with love for the packet community.
+Built by one packet nerd, for the packet community — with a lot of Cursor and a little obsession with circles.
 
 ---
 
 ### Closing line options for LinkedIn
 
-- “If you’ve ever wanted the PacketCircle view without booting a laptop — this is the experiment.”  
-- “Curious what a conversation-first analyzer looks like on a phone? Happy to hear feedback once it’s on the Store.”  
-- “Plugin → Swift Mac → Swift iPhone. Same idea: see the conversations first.”
+- "A packet analyzer that's free, offline, and doesn't want your data. I know — weird, right?"  
+- "I put my favorite way of *seeing* traffic on my phone. Free, no ads, no telemetry. Coffee and good karma accepted. ☕"  
+- "Plugin → Swift Mac → Swift iPhone. Same obsession: see the conversations first."
 
 ---
 
 ## Hashtag suggestions
 
-`#Wireshark` `#PacketAnalysis` `#NetworkEngineering` `#iOS` `#Swift` `#SwiftUI` `#CyberSecurity` `#NetOps` `#PacketCircle`
+`#Wireshark` `#PacketAnalysis` `#NetworkEngineering` `#iOS` `#Swift` `#SwiftUI` `#CyberSecurity` `#NetOps` `#PacketCircle` `#IndieDev` `#BuiltWithAI`
 
 ## Publishing checklist
 
-- [ ] Paste title + body into LinkedIn Article (or long post)  
+- [ ] Paste title + body into a LinkedIn Article (or long post)  
 - [ ] Upload screenshots at each `[IMAGE: …]` mark (order above works well)  
 - [ ] Link docs + plugin repos  
-- [ ] Mention App Store “coming soon” / under review  
-- [ ] Decide whether to name AI assistance (honest, short — as in the draft) or soft-pedal it  
-- [ ] Proof names: PacketCircle, PCAP/PCAPNG, ERSPAN, GRE
+- [ ] Say "App Store review / coming soon"  
+- [ ] Keep the AI-assist line — it's honest and it's on-brand  
+- [ ] Proof names: PacketCircle, PCAP/PCAPNG, Xcode, SwiftUI, Cursor  
+- [ ] Optional: add a coffee/ko-fi link next to the "buy me a coffee" line
