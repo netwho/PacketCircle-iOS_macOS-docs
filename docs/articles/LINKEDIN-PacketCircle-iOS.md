@@ -110,15 +110,18 @@ No file handy? There's a **built-in demo** capture that replays as a one-minute 
 |------|----------------|
 | **Open** | PCAP / PCAPNG from Files / share sheet — fully offline |
 | **Demo** | Bundled demo capture, ~1‑minute loop, replayable |
-| **Circle** | Conversation graph; Protocol *or* Quality edge colors; Hosts / Services layout; Top‑N focus |
+| **Circle** | Conversation graph; **Protocol** or **Quality** edge colors; Hosts / Services layout; Top‑N focus |
+| **Quality coloring** | Edges graded Excellent / Good / Fair / Poor from native TCP health; legend chips filter by grade |
 | **Gauges** | Packet/byte/error rates, top talkers & protocols |
-| **Talkers** | Conversation list |
+| **Talkers** | Conversation list with protocol badges and per-pair health grades |
 | **Decode** | Packet list, details tree, hex/ASCII (capped frames) |
-| **Session details** | Pair summary + native TCP session-health score & metrics |
+| **Session health** | Native TCP score & metrics — RTT, window, retransmits, RST, zero-window, SYN/FIN (not Wireshark `tcp.analysis`) |
+| **Quality charts** | TCP line graphs over the session: ACK round trip, packet size, inter-arrival (and related series) |
 | **TCP exchange** | Client↔server ladder of segments/ACKs |
 | **Application decode** | Lightweight previews (e.g. DNS/HTTP/Telnet) |
 | **Follow TCP Stream** | Reassembly, direction filters, ASCII/hex (budget-capped) |
 | **Replay** | Tap the status bar → replay with original timing |
+| **Options** | Quality thresholds (lenient / balanced / strict), IP-pair vs TCP-socket focus, stream budget |
 | **Guided tour** | 60-second walkthrough from circle → conversation → packets |
 | **Privacy** | Everything stays **on device** — no upload, no telemetry, ever |
 
@@ -147,7 +150,7 @@ Demo Mode is a story told in a circle — HTTP, DNS, SSH, Telnet, SMB, all lit u
 Use the circle and Talkers to spot the interesting IP pair/port, *then* jump to full Wireshark on a laptop with a proper display filter. PacketCircle finds the needle; Wireshark dissects it.
 
 **4. TCP health triage in your hand.**  
-Session details give a **native** health estimate (not Wireshark `tcp.analysis`): window, retransmissions, RST, SYN/FIN, **zero-window** events. Focus **per TCP socket** so one sick HTTPS port can't hide behind a perfectly healthy SSH session on the same IP pair.
+Session details give a **native** health estimate (not Wireshark `tcp.analysis`): window, retransmissions, RST, SYN/FIN, **zero-window** events — plus **Quality charts** (ACK round trip, packet size, inter-arrival) so you can *see* the session breathe. Focus **per TCP socket** so one sick HTTPS port can't hide behind a perfectly healthy SSH session on the same IP pair.
 
 **5. Payload peek, no laptop required.**  
 Follow TCP Stream for Telnet/HTTP-ish text with client/server coloring. The caps are deliberate — a phone isn't a workstation — and Options lets you raise the budget when you mean it.
