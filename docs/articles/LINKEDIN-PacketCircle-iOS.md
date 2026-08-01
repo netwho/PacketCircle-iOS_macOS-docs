@@ -130,6 +130,7 @@ No file handy? There's a **built-in demo** capture that replays as a one-minute 
 <p align="center">
   <img src="../assets/ios-follow-tcp-stream.jpg" alt="Follow TCP Stream: reassembled FTP session with client/server coloring" width="270">
   <img src="../assets/ios-app-decode.jpg" alt="Application decode: Telnet messages with plain-text payload" width="270">
+  <img src="../assets/ios-talkers.jpg" alt="Talkers: conversation list with protocol badges and TCP health grades" width="270">
 </p>
 
 ---
