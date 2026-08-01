@@ -38,7 +38,7 @@ So this is less "startup" and more "the itch came back." I wanted the circle on 
 
 I'm not a "real" developer. I pay the bills as a consultant, and I've had an Apple Developer account for *years* — used almost entirely to wrap and sign other people's apps for MAM/MDM distribution. Never to actually **build** something. PacketCircle for iPhone was my excuse to finally get my hands dirty with **Xcode**, **Swift** and **SwiftUI**.
 
-And like most of my side projects: **yes, this one is AI-assisted.** I built it with **Cursor** riding shotgun. I'm not going to be coy about it — and I'm not undervaluing writing the code either. Getting a native app to compile and behave is real work. What still eats the calendar, though, is the stuff AI can't invent for you: **information modeling** and **visualization that fits a small screen** — which metrics belong on the circle vs. in Session details, how TCP health should read at a glance, what a thumb-sized workflow looks like when you're actually troubleshooting. If you don't understand the metrics representation and the analyst's path through the UI, you just get a pretty toy. The goal was something that **adds value to the analysis job**, not another screen full of numbers. More on those boundaries below.
+And like most of my side projects: **yes, this one is AI-assisted.** I built it with **Cursor** riding shotgun. I'm not going to be coy about it — and I'm not undervaluing writing the code either. Getting a native app to compile and behave is real work. What still eats the calendar, though, is the stuff AI can't invent for you: **information modeling** and **visualization that fits a small screen** — which metrics belong on the circle vs. in Session details, how TCP health should read at a glance, what a thumb-sized workflow looks like when you're actually troubleshooting. If you don't understand the metrics representation and the analyst's path through the UI, you just get a pretty toy. **I hope people really find PacketCircle useful.**
 
 <p align="center">
   <img src="../assets/ios-home.jpg" alt="Home screen: Guided tour, Open Capture, Demo Mode" width="300">
@@ -157,6 +157,22 @@ Follow TCP Stream for Telnet/HTTP-ish text with client/server coloring. The caps
 
 **6. Customer site / air-gapped, guilt-free.**  
 No cloud account, no "upload your customer's PCAP to our servers." Open locally, analyze locally, delete when done. What happens on the phone stays on the phone.
+
+---
+
+### Honest limits (and what Options can change)
+
+A phone is not a laptop. PacketCircle is built for triage on a small screen, so a few caps are deliberate — and most of the tunable ones live in **Options**:
+
+- **Decode list** — how many frames land in the Decode tab (default 5 000; Options raises up to 10 000).  
+- **Follow TCP Stream budget** — reassembly size (default 256 KB; Options slider 64–2048 KB). Raise it when you mean it; huge streams still truncate on purpose.  
+- **Quality thresholds** — lenient / balanced / strict bands for Excellent → Poor.  
+- **Session focus** — whole IP-pair vs per TCP socket for health.  
+- **Circle Top N** — 10 / 25 / 50 pairs drawn on the ring (the rest stay in Talkers / analysis).
+
+There’s **no hard-coded maximum PCAP size**, but memory and CPU still rule. On a recent iPhone, circle / gauges / talkers stay comfortable well past the sizes I typically throw at it. **Personally, the largest capture I tickle day-to-day is around ~11 MB** — and that opens with no major delay. The one place you may notice wait time is **Follow TCP Stream** on a chatty flow (it re-scans and reassembles payload under the budget). Bigger files can work; just don’t expect a multi-hundred-megabyte elephant to feel as snappy as Wireshark on a MacBook.
+
+Decode depth is **native and limited** (reasonable IP/TCP, some app-layer peeks) — not Wireshark-class. That’s the trade for staying clean, offline, and App Store–shippable.
 
 ---
 
