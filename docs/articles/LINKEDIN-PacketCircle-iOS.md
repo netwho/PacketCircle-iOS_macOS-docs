@@ -174,6 +174,21 @@ Built by one packet nerd, for the packet community — with a lot of Cursor and 
 
 ---
 
+### LinkedIn companion post (selected)
+
+Use this when LinkedIn asks you to share the published article:
+
+> Apple Developer account for years — mostly for wrapping and signing apps for MAM/MDM.  
+> This time I finally built something myself.  
+> Hint: it’s not hard to guess what it is if you know me and my thing for circles…  
+>  
+> PacketCircle for iPhone: free, offline, no ads, no subscriptions, no telemetry.  
+> Short story about the obsession, the App Store constraints, and why it’s free.
+
+Attach the article link LinkedIn generates when you publish.
+
+---
+
 ### Closing line options for LinkedIn
 
 - "A packet analyzer that's free, offline, and doesn't want your data. I know — weird, right?"  
@@ -189,6 +204,7 @@ Built by one packet nerd, for the packet community — with a lot of Cursor and 
 ## Publishing checklist
 
 - [ ] Paste title + body into a LinkedIn Article (or long post)  
+- [ ] Share with the companion post below (or paste it when LinkedIn asks)  
 - [ ] Upload the screenshots from `docs/assets/` at each matching spot (order above works well)  
 - [ ] Link docs + plugin repos  
 - [ ] Say "App Store review / coming soon"  
