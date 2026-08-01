@@ -38,7 +38,7 @@ So this is less "startup" and more "the itch came back." I wanted the circle on 
 
 I'm not a "real" developer. I pay the bills as a consultant, and I've had an Apple Developer account for *years* — used almost entirely to wrap and sign other people's apps for MAM/MDM distribution. Never to actually **build** something. PacketCircle for iPhone was my excuse to finally get my hands dirty with **Xcode**, **Swift** and **SwiftUI**.
 
-And like most of my side projects: **yes, this one is AI-assisted.** I built it with **Cursor** riding shotgun. I'm not going to be coy about it — the interesting part wasn't typing every line, it was deciding what the thing should *be* and where to draw the boundaries. More on those boundaries below.
+And like most of my side projects: **yes, this one is AI-assisted.** I built it with **Cursor** riding shotgun. I'm not going to be coy about it — and I'm not undervaluing writing the code either. Getting a native app to compile and behave is real work. What still eats the calendar, though, is the stuff AI can't invent for you: **information modeling** and **visualization that fits a small screen** — which metrics belong on the circle vs. in Session details, how TCP health should read at a glance, what a thumb-sized workflow looks like when you're actually troubleshooting. If you don't understand the metrics representation and the analyst's path through the UI, you just get a pretty toy. The goal was something that **adds value to the analysis job**, not another screen full of numbers. More on those boundaries below.
 
 <p align="center">
   <img src="../assets/ios-home.jpg" alt="Home screen: Guided tour, Open Capture, Demo Mode" width="300">
