@@ -170,7 +170,7 @@ A phone is not a laptop. PacketCircle is built for triage on a small screen, so 
 - **Session focus** — whole IP-pair vs per TCP socket for health.  
 - **Circle Top N** — 10 / 25 / 50 pairs drawn on the ring (the rest stay in Talkers / analysis).
 
-There’s **no hard-coded maximum PCAP size**, but memory and CPU still rule. On a recent iPhone, circle / gauges / talkers stay comfortable well past the sizes I typically throw at it. **Personally, the largest capture I tickle day-to-day is around ~11 MB** — and that opens with no major delay. The one place you may notice wait time is **Follow TCP Stream** on a chatty flow (it re-scans and reassembles payload under the budget). Bigger files can work; just don’t expect a multi-hundred-megabyte elephant to feel as snappy as Wireshark on a MacBook.
+There’s **no hard-coded maximum PCAP size**, but memory and CPU still rule. On a recent iPhone, circle / gauges / talkers stay comfortable well past the sizes I typically throw at it. **Personally, the largest capture I tickle day-to-day is around ~15 MB** — and that opens with no major delay. The one place you may notice wait time is **Follow TCP Stream** on a chatty flow (it re-scans and reassembles payload under the budget). Bigger files can work; just don’t expect a multi-hundred-megabyte elephant to feel as snappy as Wireshark on a MacBook.
 
 Decode depth is **native and limited** (reasonable IP/TCP, some app-layer peeks) — not Wireshark-class. That’s the trade for staying clean, offline, and App Store–shippable.
 
