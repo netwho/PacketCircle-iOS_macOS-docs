@@ -101,7 +101,7 @@ We may update this Privacy Policy. When we do, we revise the **effective date** 
 
 ## Contact
 
-Privacy questions: [privacy@netwho.com](mailto:privacy@netwho.com)  
+Privacy questions: [privacy@netwho.com](mailto:walter.hofstetter@netwho.com)  
 
 Walter Hofstetter / netwho  
 
