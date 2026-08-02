@@ -25,8 +25,12 @@ Public documentation for the macOS + iOS PacketCircle Native apps.
 
 ## Legal
 
-- [License](./LICENSE.md) — free to use, not GPL
-- [Privacy Policy](./PRIVACY.md) — no collection / no sharing of your captures
+- [Privacy Policy](./PRIVACY.md) — **Data Not Collected**; on-device analysis; no live capture on iOS  
+  App Store Connect URL: `https://github.com/netwho/PacketCircle-iOS_macOS-docs/blob/main/docs/PRIVACY.md`
+- [License](./LICENSE.md) — free to use, proprietary (not GPL)  
+  `https://github.com/netwho/PacketCircle-iOS_macOS-docs/blob/main/docs/LICENSE.md`
+
+HTML mirrors (same content): [PRIVACY.html](./PRIVACY.html) · [LICENSE.html](./LICENSE.html)
 
 ---
 

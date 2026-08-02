@@ -4,62 +4,110 @@
   <img src="./assets/logo.png" alt="PacketCircle" width="140" />
 </p>
 
-**Effective date:** 29 July 2026  
-**Applies to:** PacketCircle for iOS and macOS
+**Effective date:** 2 August 2026  
+**Applies to:** PacketCircle for **iOS** and **macOS** (Native apps)  
+**Publisher:** Walter Hofstetter / **netwho**
 
-PacketCircle (“the App”) is provided by **Walter Hofstetter / netwho** (“we”, “us”).
+This policy is written for users and for App Store review. PacketCircle has **nothing to hide**: there is **no backend that receives your captures**, and there is **no analytics, advertising, or tracking SDK** in the apps.
 
-## Summary
+---
 
-- The App does **not** require an account.
-- Captures you open (or record on macOS) are processed **on your device**.
-- We do **not** collect, upload, or share your capture files with ourselves or third parties for analytics/advertising.
-- We do **not** sell personal information.
+## App Store “App Privacy” summary
 
-## What the App processes (locally)
+For Apple’s App Privacy labels, PacketCircle is intended to be declared as:
 
-Depending on how you use PacketCircle, the App may process **on your device**:
+> **Data Not Collected**
 
-- **Capture files** you choose to open (PCAP / PCAPNG), including addresses, ports, protocols, and payload bytes present in those files
-- **Live capture data** (macOS only), if you start a capture on an interface you select
-- **App preferences** stored locally (for example Options / display settings)
+Meaning: the developer does **not** collect data from the app for tracking, advertising, analytics, or our own servers. Processing happens **on your device**.
 
-Network captures can contain sensitive data. You are responsible for how you obtain, store, share, and delete those files, and for complying with applicable law.
+---
+
+## What PacketCircle does **not** do
+
+- Does **not** require an account or login  
+- Does **not** collect, upload, or transmit your PCAP / PCAPNG files to netwho or any third-party analytics/advertising service  
+- Does **not** include third-party ad, analytics, crash-reporting, or tracking SDKs  
+- Does **not** sell personal information  
+- Does **not** perform **live network capture / sniffing on iOS** (App Store iOS builds analyze files you open)
+
+---
+
+## What the App processes **on your device**
+
+Depending on how you use PacketCircle, the App may read and process **locally**:
+
+| Data | Where | Purpose |
+|------|--------|---------|
+| **Capture files** you open (PCAP / PCAPNG), including addresses, ports, protocols, and payload bytes in those files | On device | Circle, gauges, talkers, session health, decode, Follow TCP Stream, export you initiate |
+| **Live capture** from a network interface you select | **macOS only**, on device | Optional live analysis on Mac |
+| **App preferences** (Options, panel layout, tour “seen” flags, etc.) | On device (`UserDefaults` / app container) | Remember your settings |
+
+Network captures can contain sensitive or personal data. **You** choose which files to open, store, share, or delete, and you remain responsible for complying with applicable law.
+
+---
+
+## iOS vs macOS (important for review)
+
+| | **iOS (App Store)** | **macOS** |
+|--|---------------------|-----------|
+| Input | Open PCAP / PCAPNG from Files, AirDrop, share sheet, document browser | Open files **and** optional live capture |
+| Processing | On device | On device |
+| Developer servers | None for capture analysis | None for capture analysis |
+
+---
 
 ## How information is used
 
-On-device processing is used only to provide App features, such as:
+On-device processing exists only to provide App features, for example:
 
-- visualizing communication pairs
-- traffic statistics and session quality estimates
-- decoding frames and following TCP streams
-- exporting or saving captures you choose to save
+- visualizing communication pairs on the circle  
+- traffic statistics and native TCP session-quality estimates  
+- decoding frames and following TCP streams  
+- saving or exporting a capture **when you choose to**
 
-## Data sharing
+We do **not** use your captures to train models, build profiles, or target ads.
 
-We do **not** sell your data. The App does **not** upload your capture files to our servers.
+---
 
-If you use optional system features (AirDrop, Files, Mail, opening a file in Wireshark on Mac, etc.), those actions are controlled by you and subject to the other product’s terms and privacy policy.
+## Sharing
 
-Apple may collect diagnostic or App Store / TestFlight-related information according to your device settings and Apple’s privacy policy.
+- We do **not** sell your data.  
+- The App does **not** upload your capture files to our servers.  
+- If **you** use system features (AirDrop, Files, Mail, Messages, opening a file in another app on Mac, iCloud Drive, etc.), those actions are initiated by you and governed by Apple’s / that product’s terms and privacy policy.
+
+Apple may collect App Store, TestFlight, or diagnostic information according to **your** device settings and [Apple’s Privacy Policy](https://www.apple.com/legal/privacy/). That collection is by Apple, not by PacketCircle’s analysis engine.
+
+---
 
 ## Retention & deletion
 
-Capture files and preferences remain on your device (or in locations you choose) until you delete them. Uninstalling the App removes data in the App’s container; files you saved elsewhere (Downloads, Files, iCloud Drive, …) remain until you delete them there.
+- Capture files and preferences stay on your device (or in locations you choose) until **you** delete them.  
+- Uninstalling the App removes data in the App’s container.  
+- Files you saved elsewhere (Files app, Downloads, iCloud Drive, …) remain until you delete them there.
+
+---
 
 ## Children
 
 The App is not directed at children under 13 (or the minimum age required in your country).
 
+---
+
 ## Changes
 
-We may update this Privacy Policy from time to time. The effective date above will be revised when changes are posted.
+We may update this Privacy Policy. When we do, we revise the **effective date** at the top of this page.
+
+---
 
 ## Contact
 
 Privacy questions: [privacy@netwho.com](mailto:privacy@netwho.com)  
-Walter Hofstetter / netwho
+
+Walter Hofstetter / netwho  
+
+**Canonical policy URL (for App Store Connect):**  
+https://github.com/netwho/PacketCircle-iOS_macOS-docs/blob/main/docs/PRIVACY.md
 
 ---
 
-Made with love for the packet community.
+*Made with love for the packet community.*
