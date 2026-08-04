@@ -50,4 +50,5 @@ From Session details, open **Follow TCP Stream** for capped ASCII/hex reassembly
 ## Next
 
 Read **[Detailed usage](./DETAILED-USAGE.md)** for representations, Gauges quality panels, multi-select Talkers workflows, and Options.  
-See **[1.1.0 notes](./KNOWN-ISSUES-1.0.0.md)** for what changed since 1.0.0.
+See **[Release notes 1.1.0](./RELEASE-NOTES-1.1.0.md)** for what changed since 1.0.0.  
+1.0.0 caveats are archived in **[Known issues 1.0.0](./KNOWN-ISSUES-1.0.0.md)**.

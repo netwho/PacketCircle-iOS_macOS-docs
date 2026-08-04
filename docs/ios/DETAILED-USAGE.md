@@ -5,7 +5,8 @@
 </p>
 
 > For the current build walkthrough with Simulator screenshots, see the **[User Manual](USER-MANUAL.md)**.  
-> For **1.1.0** changes vs 1.0.0, see **[Known issues / release notes](KNOWN-ISSUES-1.0.0.md)**.
+> For **1.1.0** changes, see **[Release notes 1.1.0](RELEASE-NOTES-1.1.0.md)**.  
+> For the **1.0.0** known-issue archive, see **[Known issues 1.0.0](KNOWN-ISSUES-1.0.0.md)**.
 
 PacketCircle is built for **conversation-first** packet analysis: see who talks to whom, which services matter, where TCP health degrades, then drill into decode and payload when needed — all offline from PCAP / PCAPNG.
 

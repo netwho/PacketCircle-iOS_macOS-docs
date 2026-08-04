@@ -12,7 +12,8 @@ Public documentation for the macOS + iOS PacketCircle Native apps.
 - [Quickstart](./ios/QUICKSTART.md)
 - [Detailed usage](./ios/DETAILED-USAGE.md) — Hosts vs Services, Talkers workflows, session/decode
 - [Limitations](./ios/LIMITATIONS.md)
-- **[1.1.0 notes & archived 1.0.0 known issues](./ios/KNOWN-ISSUES-1.0.0.md)** — what shipped in 1.1.0
+- **[Release notes 1.1.0](./ios/RELEASE-NOTES-1.1.0.md)** — what shipped in 1.1.0
+- **[Known issues 1.0.0](./ios/KNOWN-ISSUES-1.0.0.md)** — archive of 1.0.0 caveats (resolved in 1.1.0)
 
 > iOS **1.1.0** adds conversation UX fixes, Gauges quality panels, host names, and broader native decode.
 
