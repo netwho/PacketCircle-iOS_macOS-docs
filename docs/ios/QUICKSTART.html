@@ -10,14 +10,12 @@
     .shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 16px 0 24px; }
     .shots img { width: 100%; height: auto; border-radius: 10px; border: 1px solid #e5e7eb; }
     .shots figcaption { font-size: 12px; color: #666; text-align: center; margin-top: 4px; }
-    .disclaimer { background: #fff8e6; border: 1px solid #f0d78c; border-radius: 8px; padding: 10px 14px; }
   </style>
 </head>
 <body>
   <h1>PacketCircle iOS: Quickstart</h1>
   <img class="logo" src="../assets/logo.png" alt="PacketCircle" />
-  <p class="disclaimer"><strong>Disclaimer:</strong> the iOS release is currently under review by the Apple App Store and should be available soon.</p>
-  <p>Offline PCAP/PCAPNG analyzer: Hosts ring or Services map, then session health, decode, and Follow TCP Stream.</p>
+  <p>Offline PCAP/PCAPNG analyzer: Hosts ring or Services map, Gauges quality triage, session health, decode, and Follow TCP Stream.</p>
 
   <h2>Screenshots</h2>
   <div class="shots">
@@ -37,13 +35,13 @@
 
   <h2>Steps</h2>
   <ol>
-    <li><strong>Open Capture</strong> (or Demo Mode) — full analyze; status bar shows file · packets · pairs</li>
-    <li><strong>Explore</strong> — Circle (Hosts / Services), Gauges, Talkers (check to filter / Decode / Save PCAP), Decode</li>
+    <li><strong>Open Capture</strong> (or Demo Mode / guided tour) — full analyze; status bar shows file · packets · pairs</li>
+    <li><strong>Explore</strong> — Circle (Hosts / Services; Protocol or Quality), Gauges (degraded list + quality timeline), Talkers (all pairs; Circle keeps Top‑N), Decode</li>
     <li><strong>Replay</strong> — tap status bar for original timing</li>
-    <li><strong>Session details</strong> — TCP health, exchange, app / TLS / ICMP previews</li>
+    <li><strong>Session details</strong> — bi-dir summary; ports when a socket is selected; TCP health, exchange, app / TLS / ICMP previews</li>
     <li><strong>Follow TCP Stream</strong> — client red / server blue; budget in Options</li>
   </ol>
 
-  <p>Next: <a href="./DETAILED-USAGE.html">Detailed usage</a> · <a href="./LIMITATIONS.html">Limitations</a></p>
+  <p>Next: <a href="./DETAILED-USAGE.html">Detailed usage</a> · <a href="./KNOWN-ISSUES-1.0.0.md">1.1.0 notes</a> · <a href="./LIMITATIONS.html">Limitations</a></p>
 </body>
 </html>

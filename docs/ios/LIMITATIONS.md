@@ -17,9 +17,9 @@ PacketCircle iOS favors responsiveness on phone. There is **no hard-coded maximu
 | **PCAP / PCAPNG size** | ~**50–200 MB** | Larger files may feel slow or get memory-killed on older devices |
 | **Packet count** | Hundreds of thousands | Millions — analysis still streams, but UI work (decode/follow) gets heavy |
 | **Unique conversations (pairs)** | Hundreds → low thousands | Very large pair sets grow RAM (aggregates are kept in memory) |
-| **Circle Top N** | **10 / 25 / 50** (UI) | Only the top N pairs are drawn (Hosts or Services layout); others remain in Talkers/analysis |
+| **Circle Top N** | **10 / 25 / 50** (UI) | Only the top N pairs are drawn (Hosts or Services layout); **Talkers lists all** analyzed pairs |
 | **Hosts on the ring** | Up to **64** stable slots | Extra hosts may not get a permanent ring slot (Hosts mode) |
-| **Services layout** | Same Top‑N pairs | Bipartite host→service edges only — denser fan-in can still look busy; use legend filters |
+| **Services layout** | Same Top‑N pairs on the ring | Bipartite host→service edges only — denser fan-in can still look busy; use legend filters |
 
 **Rule of thumb:** Circle / Gauges / Talkers scale with **how many unique pairs** you have, not only with file size. A 500 MB capture with few talkers can be fine; a smaller file with huge fan-out of unique IPs can still pressure memory.
 

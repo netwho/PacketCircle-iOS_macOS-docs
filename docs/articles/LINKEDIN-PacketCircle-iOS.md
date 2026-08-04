@@ -81,7 +81,9 @@ Two switches on the circle change what you're *looking for*:
 - **Color → Quality** paints the *same* host nodes by native TCP session health — Excellent / Good / Fair / Poor. Sick conversations light up red without opening Wireshark. The legend chips become grade filters, so you can solo Poor and hide the noise.
 - **Hosts vs Services** rearranges the ring: hosts around the rim (node-to-node), or hosts on one side and service ports on the other (who speaks HTTP/SSH/…).
 
-No file handy? There's a **built-in demo** capture that replays as a one-minute loop so you can see the whole thing move without a lab network.
+**Gauges** add a **Degraded Quality Conversations** list (Fair/Poor) and a **quality timeline** you can tap into a time slice for Talkers. Conversation summaries are **bi-directional**; ports show when you pick a socket. Optional **Show host names** pulls shortened labels from DNS / mDNS / NetBIOS in the capture.
+
+No file handy? There's a **built-in demo** capture that replays so you can see the whole thing move without a lab network.
 
 ---
 
@@ -89,12 +91,12 @@ No file handy? There's a **built-in demo** capture that replays as a one-minute 
 
 1. **Open** a capture or hit **Demo Mode**.  
 2. Play in the **Circle**: tap nodes/edges; flip **Color** between Protocol and Quality; use the legend chips as filter. Hosts vs Services rearranges the ring.  
-3. Peek at **Gauges** for rates and top talkers/protocols.  
-4. Browse **Talkers** for the conversation list, or **Decode** for frames + details/hex.  
-5. Open **Session details** for TCP health, the exchange ladder, and app decode.  
+3. Peek at **Gauges** for rates, degraded Fair/Poor conversations, and the quality timeline.  
+4. Browse **Talkers** for the full conversation list, or **Decode** for frames + details/hex.  
+5. Open **Session details** for the bi-dir summary, TCP health, exchange ladder, and app decode.  
 6. **Follow TCP Stream** when you want the reassembled payload (ASCII/hex) — with a budget so your phone doesn't melt on a 2 GB elephant.  
 7. Tap the **status bar** (filename · packets · pairs) to **replay** with original timing.  
-8. Open the **ⓘ About** and the **Options** gear for the guided tour, quality bands, IP-pair vs TCP-socket focus, and the stream budget.
+8. Open the **ⓘ About** and the **Options** gear for the guided tour, quality bands, host names, IP-pair vs TCP-socket focus, and the stream budget.
 
 <p align="center">
   <img src="../assets/ios-gauges.jpg" alt="Gauges: packet/byte/error rates, top talkers and protocols" width="270">
@@ -104,25 +106,27 @@ No file handy? There's a **built-in demo** capture that replays as a one-minute 
 
 ---
 
-### Feature list (v1)
+### Feature list (v1 / 1.1)
 
 | Area | What you get |
 |------|----------------|
 | **Open** | PCAP / PCAPNG from Files / share sheet — fully offline |
-| **Demo** | Bundled demo capture, ~1‑minute loop, replayable |
+| **Demo** | Bundled demo capture, replayable |
 | **Circle** | Conversation graph; **Protocol** or **Quality** edge colors; Hosts / Services layout; Top‑N focus |
 | **Quality coloring** | Edges graded Excellent / Good / Fair / Poor from native TCP health; legend chips filter by grade |
-| **Gauges** | Packet/byte/error rates, top talkers & protocols |
-| **Talkers** | Conversation list with protocol badges and per-pair health grades |
-| **Decode** | Packet list, details tree, hex/ASCII (capped frames) |
+| **Gauges** | Rates, top talkers & protocols; **Degraded Quality Conversations**; **quality timeline** → Talkers slice |
+| **Talkers** | **All** analyzed pairs (Circle keeps Top‑N); bi-dir summary; protocol badges and health grades |
+| **Decode** | Packet list, friendly details tree, hex/ASCII (capped frames); broader infra peeks in 1.1 |
 | **Session health** | Native TCP score & metrics — RTT, window, retransmits, RST, zero-window, SYN/FIN (not Wireshark `tcp.analysis`) |
+| **Conversation UI** | Bi-directional hosts; ports when a **socket** is selected; unnamed listeners stay visible |
+| **Host names** | Optional shortened DNS / mDNS / LLMNR / NetBIOS labels (Options) |
 | **Quality charts** | TCP line graphs over the session: ACK round trip, packet size, inter-arrival (and related series) |
 | **TCP exchange** | Client↔server ladder of segments/ACKs |
-| **Application decode** | Lightweight previews (e.g. DNS/HTTP/Telnet) |
+| **Application decode** | Lightweight previews (DNS/HTTP/Telnet/… + infra where present) |
 | **Follow TCP Stream** | Reassembly, direction filters, ASCII/hex (budget-capped) |
 | **Replay** | Tap the status bar → replay with original timing |
-| **Options** | Quality thresholds (lenient / balanced / strict), IP-pair vs TCP-socket focus, stream budget |
-| **Guided tour** | 60-second walkthrough from circle → conversation → packets |
+| **Options** | Quality thresholds, host names, IP-pair vs TCP-socket focus, stream budget |
+| **Guided tour** | Circle → Session → Gauges; Finish leaves a clean desk |
 | **Privacy** | Everything stays **on device** — no upload, no telemetry, ever |
 
 <p align="center">
@@ -168,7 +172,8 @@ A phone is not a laptop. PacketCircle is built for triage on a small screen, so 
 - **Follow TCP Stream budget** — reassembly size (default 256 KB; Options slider 64–2048 KB). Raise it when you mean it; huge streams still truncate on purpose.  
 - **Quality thresholds** — lenient / balanced / strict bands for Excellent → Poor.  
 - **Session focus** — whole IP-pair vs per TCP socket for health.  
-- **Circle Top N** — 10 / 25 / 50 pairs drawn on the ring (the rest stay in Talkers / analysis).
+- **Circle Top N** — 10 / 25 / 50 pairs drawn on the ring (**Talkers** lists all analyzed pairs).
+- **Show host names** — optional shortened names from the capture’s own resolution traffic.
 
 There’s **no hard-coded maximum PCAP size**, but memory and CPU still rule. On a recent iPhone, circle / gauges / talkers stay comfortable well past the sizes I typically throw at it. **Personally, the largest capture I tickle day-to-day is around ~15 MB** — and that opens with no major delay. The one place you may notice wait time is **Follow TCP Stream** on a chatty flow (it re-scans and reassembles payload under the budget). Bigger files can work; just don’t expect a multi-hundred-megabyte elephant to feel as snappy as Wireshark on a MacBook.
 
@@ -187,7 +192,7 @@ Decode depth is **native and limited** (reasonable IP/TCP, some app-layer peeks)
 
 ### For the curious / future dev
 
-A few questions I already know you'll ask:
+**1.1.0** already landed the conversation UX polish, Gauges quality panels, host names, and broader native decode described above. What’s still on my mind:
 
 - **"Is there a Mac version?"** Yes — thanks to Swift/SwiftUI sharing the core, a **macOS** build already runs on my machine. It's still catching up in features, so **no release date yet.** It'll show up when it's not embarrassing.
 - **"Android?"** No idea yet. I'll at least go find out what it would take — different language, different capture story, different store politics. Consider it "researching," not "promising."

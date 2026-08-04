@@ -4,9 +4,7 @@
   <img src="../assets/logo.png" alt="PacketCircle" width="180" />
 </p>
 
-> **Disclaimer:** the iOS release is currently under review by the Apple App Store and should be available soon.
-
-PacketCircle iOS is an offline analyzer for PCAP/PCAPNG. Open a capture, explore talkers on a **Hosts** ring or a **Services** map, then drill into session health, decode, and Follow TCP Stream.
+PacketCircle iOS is an offline analyzer for PCAP/PCAPNG. Open a capture, explore talkers on a **Hosts** ring or a **Services** map, triage TCP health on **Gauges**, then drill into session health, decode, and Follow TCP Stream.
 
 ## Screenshots
 
@@ -26,16 +24,16 @@ PacketCircle iOS is an offline analyzer for PCAP/PCAPNG. Open a capture, explore
 ## 1) Open a capture
 
 1. Open PacketCircle iOS.
-2. Tap **Open Capture** and pick a `*.pcap` / `*.pcapng` (or use **Demo Mode**).
+2. Tap **Open Capture** and pick a `*.pcap` / `*.pcapng` (or use **Demo Mode** / the **guided tour**).
 3. The app loads / analyzes the entire trace.
 4. The bottom status bar shows: `<file> · <X pkts> · <Y pairs>`
 
 ## 2) Explore
 
-- **Circle** — Hosts ring (who↔whom) or **Services** map (host→HTTP/SSH/…)
-- **Gauges** — rates, top talkers, top protocols
-- **Talkers** — ranked Top‑N list; check rows to filter / Decode / Save PCAP
-- **Decode** — packet list + details / hex
+- **Circle** — Hosts ring (who↔whom) or **Services** map (host→HTTP/SSH/…). Color by **Protocol** or **Quality**. Optional **Show host names** in Options.
+- **Gauges** — rates, top talkers/protocols, **Degraded Quality Conversations**, and a **quality timeline** (tap → time slice → Talkers).
+- **Talkers** — **all** analyzed conversations (Circle keeps Top‑N for the ring); check rows to filter / Decode / Save PCAP.
+- **Decode** — packet list + details / hex (friendly protocol labels; native depth).
 
 ## 3) Replay (optional)
 
@@ -43,7 +41,7 @@ Tap the bottom capture status bar → confirm **Replay** for original timing.
 
 ## 4) Session details
 
-Select a pair → **Session details** for TCP health, exchange ladder, application / TLS / ICMP previews.
+Select a pair → **Session details**. The conversation header is bi-directional. **Whole conversation** shows no ports; pick a **socket** for `TCP/80 HTTP`-style labels on both sides. Then TCP health, charts, exchange ladder, application / TLS / ICMP previews.
 
 ## 5) Follow TCP Stream
 
@@ -51,4 +49,5 @@ From Session details, open **Follow TCP Stream** for capped ASCII/hex reassembly
 
 ## Next
 
-Read **[Detailed usage](./DETAILED-USAGE.md)** for representations, multi-select Talkers workflows, and Options.
+Read **[Detailed usage](./DETAILED-USAGE.md)** for representations, Gauges quality panels, multi-select Talkers workflows, and Options.  
+See **[1.1.0 notes](./KNOWN-ISSUES-1.0.0.md)** for what changed since 1.0.0.

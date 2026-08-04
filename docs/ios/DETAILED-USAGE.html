@@ -24,8 +24,7 @@
 <body>
   <h1>PacketCircle iOS: Detailed Usage</h1>
   <img class="logo" src="../assets/logo.png" alt="PacketCircle" />
-  <p class="disclaimer"><strong>Disclaimer:</strong> the iOS release is currently under review by the Apple App Store and should be available soon.</p>
-  <p>PacketCircle is built for <strong>conversation-first</strong> packet analysis: see who talks to whom, which services matter, where TCP health degrades, then drill into decode and payload — offline from PCAP / PCAPNG.</p>
+  <p>PacketCircle is built for <strong>conversation-first</strong> packet analysis: see who talks to whom, which services matter, where TCP health degrades, then drill into decode and payload — offline from PCAP / PCAPNG. See <a href="./KNOWN-ISSUES-1.0.0.md">1.1.0 notes</a> for recent changes.</p>
 
   <h2>Screenshots</h2>
   <div class="shots">
@@ -43,8 +42,8 @@
   <h2>Analyst mental model</h2>
   <ol>
     <li><strong>Topology</strong> — Circle (Hosts or Services): structure</li>
-    <li><strong>Volume &amp; health</strong> — Gauges + edge coloring: intensity and pain</li>
-    <li><strong>Ranking</strong> — Talkers Top‑N: priority</li>
+    <li><strong>Volume &amp; health</strong> — Gauges (degraded list + quality timeline) + edge coloring</li>
+    <li><strong>Ranking</strong> — Talkers lists all pairs; Circle keeps Top‑N for drawing</li>
     <li><strong>Session</strong> — health, RTT, window, retrans, TLS/ICMP cues</li>
     <li><strong>Evidence</strong> — Decode / Follow TCP Stream: frames and payload</li>
   </ol>
@@ -77,10 +76,14 @@
   <blockquote>Tip: solo a legend chip before opening Session Details.</blockquote>
 
   <h2>Gauges</h2>
-  <p>Rate history, top talkers (bytes / packets), and top protocols — a dashboard before a deep dive.</p>
+  <ul>
+    <li>Rate history, top talkers (bytes / packets), top protocols</li>
+    <li><strong>Degraded Quality Conversations</strong> — Fair/Poor, worst first → Session</li>
+    <li><strong>Quality timeline</strong> — tap → time slice → Talkers</li>
+  </ul>
 
   <h2>Talkers</h2>
-  <p>Ranked Top‑N list with <code>#1…#N</code>, IP filter, and checkboxes.</p>
+  <p>Ranked list of <strong>all</strong> analyzed pairs (Circle Top‑N is separate), with bi-directional summary, IP filter, optional time slice, and checkboxes.</p>
   <p>When conversations are checked:</p>
   <ul>
     <li><strong>Copy Filter</strong> — Wireshark display filter (OR of pairs)</li>
@@ -90,10 +93,11 @@
 
   <h2>Session Details</h2>
   <ul>
+    <li><strong>Conversation summary</strong> — bi-directional hosts; ports when a socket is selected</li>
     <li><strong>TCP Session Health</strong> — native 0–100 score + grade; RTT, window, retrans, RST/SYN/FIN</li>
     <li><strong>Conversation vs Sockets</strong> (Options) — pair-aggregated vs port-specific health</li>
     <li><strong>TCP Exchange</strong> — client↔server ladder (paginated)</li>
-    <li><strong>Application / TLS / ICMP</strong> — protocol previews when present</li>
+    <li><strong>Application / TLS / ICMP / infra peeks</strong> — protocol previews when present</li>
     <li><strong>Follow TCP Stream</strong> — Client red / Server blue; ASCII · Hex · Hex+ASCII; budget in Options</li>
   </ul>
 
@@ -111,31 +115,34 @@
   <ul>
     <li>TCP health focus (Conversation / Sockets)</li>
     <li>Quality thresholds (Lenient / Balanced / Strict) — grade bands only</li>
+    <li>Show host names (shortened DNS / mDNS / NetBIOS)</li>
     <li>Follow TCP Stream budget (64–2048 KB)</li>
     <li>Decode frame limit</li>
+    <li>Guided tour — Circle → Session → Gauges; Finish leaves a clean Circle</li>
   </ul>
   <p>Circle menu also: IP vs MAC, Packets vs Bytes, Top N, Protocol vs Quality coloring.</p>
 
   <h2>Suggested workflows</h2>
   <h3>“What is this capture about?”</h3>
   <ol class="workflow">
-    <li>Gauges for top protocols / talkers</li>
+    <li>Gauges for top protocols / talkers / degraded list</li>
     <li>Circle · Services for app exposure</li>
     <li>Legend filter if noisy</li>
   </ol>
   <h3>“Find the sick TCP session”</h3>
   <ol class="workflow">
-    <li>Color · Quality on Circle</li>
-    <li>Open Fair/Poor edges → Session Details</li>
+    <li>Color · Quality on Circle, or Gauges → Degraded Quality Conversations</li>
+    <li>Open Fair/Poor → Session Details</li>
     <li>Sockets focus if many ports share a pair</li>
+    <li>Optional: quality timeline → time slice → Talkers</li>
     <li>Follow Stream or Decode for evidence</li>
   </ol>
   <h3>“Export interesting talkers”</h3>
   <ol class="workflow">
-    <li>Talkers → check ranked rows</li>
+    <li>Talkers → check ranked rows (full list)</li>
     <li>Save PCAP and/or Copy Filter</li>
   </ol>
 
-  <p><a href="./QUICKSTART.html">Quickstart</a> · <a href="./LIMITATIONS.html">Limitations</a></p>
+  <p><a href="./QUICKSTART.html">Quickstart</a> · <a href="./KNOWN-ISSUES-1.0.0.md">1.1.0 notes</a> · <a href="./LIMITATIONS.html">Limitations</a></p>
 </body>
 </html>

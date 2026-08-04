@@ -24,8 +24,9 @@ We do **not** collect ANY data — see [Privacy](./docs/PRIVACY.md).
 - [Quickstart](./docs/ios/QUICKSTART.md)
 - [Detailed usage](./docs/ios/DETAILED-USAGE.md) — representations, analyst workflows, Talkers multi-select
 - [Limitations](./docs/ios/LIMITATIONS.md)
+- **[1.1.0 notes](./docs/ios/KNOWN-ISSUES-1.0.0.md)** — conversation UX, Gauges quality panels, host names, decode depth
 
-> **Disclaimer:** the iOS release is currently under App Store review and should be available soon.
+> iOS **1.1.0** continues the conversation-first triage story (App Store availability depends on review timing).
 
 ### macOS
 - [Quickstart (teaser)](./docs/macos/QUICKSTART.md)

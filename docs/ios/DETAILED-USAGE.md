@@ -4,9 +4,8 @@
   <img src="../assets/logo.png" alt="PacketCircle" width="180" />
 </p>
 
-> **Disclaimer:** the iOS release is currently under review by the Apple App Store and should be available soon.
-
-> For the current build walkthrough with fresh Simulator screenshots, see the **[User Manual](USER-MANUAL.md)**.
+> For the current build walkthrough with Simulator screenshots, see the **[User Manual](USER-MANUAL.md)**.  
+> For **1.1.0** changes vs 1.0.0, see **[Known issues / release notes](KNOWN-ISSUES-1.0.0.md)**.
 
 PacketCircle is built for **conversation-first** packet analysis: see who talks to whom, which services matter, where TCP health degrades, then drill into decode and payload when needed — all offline from PCAP / PCAPNG.
 
@@ -33,8 +32,8 @@ This guide explains the **representations**, **controls**, and **analyst workflo
 Think in layers:
 
 1. **Topology** — Circle (Hosts or Services) answers *structure*: who connects, which apps dominate.
-2. **Volume & health** — Gauges + edge coloring answer *intensity* and *pain*.
-3. **Ranking** — Talkers answers *priority*: Top‑N pairs by packets or bytes.
+2. **Volume & health** — Gauges (including degraded conversations + quality timeline) + edge coloring answer *intensity* and *pain*.
+3. **Ranking** — Talkers answers *priority*: all analyzed pairs by packets or bytes (Circle still uses Top‑N for drawing).
 4. **Session** — Session Details answers *why this pair looks odd* (RTT, window, retrans, RST, TLS/ICMP cues).
 5. **Evidence** — Decode / Follow TCP Stream answers *what was said* (frames, hex, reassembled payload).
 
@@ -78,31 +77,36 @@ Toggle **Hosts** / **Services** (top-right chip on the Circle tab). Both use the
 
 ---
 
-## Gauges — rates and rankings
+## Gauges — rates, degraded quality, timeline
 
 Gauges summarize the capture (and live Demo / Replay ticks) as:
 
 - **Packet / byte / error-style rate** strips over a short rolling history  
 - **Top talkers** by bytes and by packets  
 - **Top protocols** by share  
+- **Degraded Quality Conversations** — **Fair** and **Poor** only, worst first; tap a row → **Session details**  
+- **Quality timeline** — graded bars over capture time (idle gaps compressed); **tap** → choose a ± time slice → opens **Talkers** filtered to that window  
 
-**Use when:** you need a dashboard answer — “is this capture bursty?”, “which pair owns the bytes?”, “is DNS drowning the rest?” — before committing to a deep dive.
+In-app **?** help sheets explain both quality panels and how Lenient / Balanced / Strict Options presets map scores to grades.
 
-Tap into gauge detail rows when available to jump toward the same conversations you would find under Talkers.
+**Use when:** you need a dashboard answer — “is this capture bursty?”, “which pair owns the bytes?”, “when did quality go Fair/Poor?” — before committing to a deep dive.
 
 ---
 
 ## Talkers — ranked conversations
 
-Talkers is the **ordered work queue** for analysts.
+Talkers is the **ordered work queue** for analysts. It lists **all** analyzed conversations (not capped like the Circle ring).
 
 | Control | Behavior |
 |---------|----------|
-| **#1 … #N** | Rank inside the current Top‑N (by packets or bytes, matching Weight) |
-| **Top 10 / 25 / 50** | How many pairs appear in Circle + Talkers |
+| **#1 … #N** | Rank by packets or bytes (matching Weight) |
+| **Top 10 / 25 / 50** | Applies to **Circle** drawing only — Talkers still shows the full list |
 | **IP filter** | Narrow the list without re-analyzing the file |
+| **Time slice** | Optional window from the Gauges quality timeline |
 | **Checkbox** | Multi-select conversations |
 | **Select all / Clear** | Bulk selection helpers |
+
+Each row uses the same **bi-directional** conversation summary as Circle / Session. Optional **Show host names** shortens DNS / mDNS / NetBIOS labels.
 
 ### When anything is checked
 
@@ -122,7 +126,16 @@ Tap the row (not the checkbox) to open **Session Details**. Context menus still 
 
 ## Session Details — per-conversation deep dive
 
-Opened from Circle (edge / card) or Talkers. Layout adapts to what the pair actually carries.
+Opened from Circle (edge / card), Talkers, or Gauges (degraded list). Layout adapts to what the pair actually carries.
+
+### Conversation summary
+
+Shared bi-directional header:
+
+- Both hosts (optionally shortened names), packets each direction, protocol chips  
+- **Whole conversation** — **no ports** (avoids inventing wrong peer services)  
+- **Socket selected** — one port each side, e.g. `TCP/80 HTTP` ⟷ `TCP/4444`  
+- Unnamed listeners stay visible as sockets (e.g. backchannel **4444**)
 
 ### TCP Session Health
 
@@ -152,10 +165,11 @@ Client ↔ server ladder of segments (flags, seq/ack, payload lengths). Paginate
 Protocol-aware previews where PacketCircle can summarize them, for example:
 
 - DNS / HTTP / SMB / mail / FTP / Telnet / Kerberos / LDAP / SSH snippets  
+- Infra peeks where present: **IPsec**, **BGP**, **OSPF**, **MPLS**, **VXLAN**, **NetFlow/IPFIX**, **LLDP**, **EAPOL**, **STP BPDU**, **mDNS/LLMNR**  
 - **TLS** card when certificates / SNI are visible (TLS 1.3 often SNI-only)  
 - **ICMP / ICMPv6 / ARP** message lists when that is the conversation’s layer  
 
-Rows are paginated; use **Show in Decode** for the full capped frame list.
+Decode labels prefer readable names (operation / class / answers) over bare opcodes. Rows are paginated; use **Show in Decode** for the full capped frame list.
 
 ### Follow TCP Stream
 
@@ -203,8 +217,10 @@ Status bar shows roughly: `<file> · <packets> · <pairs>` and offers Replay whe
 |---------|--------|
 | **TCP health focus** | Conversation vs Sockets (see Session Details) |
 | **Quality thresholds** | Lenient / Balanced / Strict — remaps the same 0–100 score into grade bands (color only) |
+| **Show host names** | Prefer shortened DNS / mDNS / LLMNR / NetBIOS names on Circle, Talkers, Session (addresses still used for filters) |
 | **Follow TCP Stream budget** | Caps reassembly + scan so huge streams don’t freeze the UI |
 | **Decode frame limit** | Caps how many frames Decode materializes |
+| **Guided tour** | Circle → Session → Gauges; Finish/Skip leaves a clean, unfiltered Circle |
 
 Also available from the Circle view menu: **IP vs MAC** analysis mode, **Packets vs Bytes** weight, **Top N**, **Protocol vs Quality** edge coloring.
 
@@ -214,20 +230,21 @@ Also available from the Circle view menu: **IP vs MAC** analysis mode, **Packets
 
 ### “What is this capture about?”
 
-1. Open → glance **Gauges** (top protocols / talkers)  
+1. Open → glance **Gauges** (top protocols / talkers, degraded list, quality timeline)  
 2. **Circle · Services** — which apps appear, who fans into them  
 3. Solo noisy protocols off the legend if needed  
 
 ### “Find the sick TCP session”
 
-1. Circle menu → Color **Quality**  
-2. Spot Poor / Fair edges → open Session Details  
+1. Circle menu → Color **Quality**, **or** open **Gauges → Degraded Quality Conversations**  
+2. Spot Poor / Fair edges / rows → open Session Details  
 3. If the pair hosts several ports, switch Options to **Sockets** and isolate the bad service  
-4. Follow TCP Stream or Show in Decode for evidence  
+4. Optionally tap the **quality timeline** → time slice → Talkers for that window  
+5. Follow TCP Stream or Show in Decode for evidence  
 
 ### “Export just the interesting talkers”
 
-1. Talkers → set Top N → check the ranked rows you care about  
+1. Talkers → check the ranked rows you care about (full list; Circle Top‑N is separate)  
 2. **Save PCAP** for a shareable subset, and/or **Copy Filter** for Wireshark  
 
 ### “Cleartext / legacy service exposure”

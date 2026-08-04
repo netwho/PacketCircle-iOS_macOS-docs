@@ -4,7 +4,7 @@
   <img src="../assets/logo.png" alt="PacketCircle" width="180" />
 </p>
 
-*Screenshots from the iOS Simulator against the current Debug build and the built-in demo capture (`PacketCircleDemo.pcap`).*
+*Screenshots from the iOS Simulator against the current Debug build and the built-in demo capture (`PacketCircleDemo.pcap`), captured in **dark mode**.*
 
 ---
 
@@ -27,7 +27,7 @@ It contains **no open-source Wireshark / libwireshark dissection**. There is no 
 Application-layer decode is **best-effort and limited**. You get **reasonable IP and TCP** trees, hex, and **some** app-level recognition (for example HTTP request lines, DNS names, SSH banners, FTP/Telnet ASCII, SMB headers, TLS SNI where detectable). That is often enough to orient a lab or field capture — it is **not** comparable to Wireshark’s depth or accuracy.
 
 For capacity and decode limits, see [Limitations](LIMITATIONS.md).  
-For shipping caveats in **1.0.0** and the **1.1.0** fix/feature list, see [Known issues 1.0.0](KNOWN-ISSUES-1.0.0.md).
+For **1.1.0** release notes (and archived 1.0.0 known issues), see [Known issues / 1.1.0 notes](KNOWN-ISSUES-1.0.0.md).
 
 ---
 
@@ -36,7 +36,7 @@ For shipping caveats in **1.0.0** and the **1.1.0** fix/feature list, see [Known
 | Step | Action |
 |------|--------|
 | 1 | Install / run PacketCircle on iPhone or Simulator. |
-| 2 | On first launch, take the **Guided tour** (~60 seconds), or open **Options → Guided tour** later. |
+| 2 | On first launch, take the **Guided tour**, or open **Options → Guided tour** later (ends on a clean Circle). |
 | 3 | Tap the folder control to import a **PCAP** or **PCAPNG**, or use the **demo** sample when the canvas is empty. |
 | 4 | Explore **Circle → Talkers / Session → Decode** as needed. |
 
@@ -135,7 +135,7 @@ Client/server coloring is directional, not a full protocol interpreter.
 
 ### 3.4 Talkers
 
-List of IP pairs ranked by volume, with protocol chips, quality grade, and quick TCP hints. Filter by IP; limit top **10 / 25 / 50**. Tap a row for Session.
+List of **all** analyzed IP pairs ranked by volume, with a bi-directional summary, protocol chips, quality grade, and TCP hints. Filter by IP; optional time slice from Gauges. Circle Top‑N (**10 / 25 / 50**) does **not** hide Talkers rows. Tap a row for Session.
 
 ![Talkers list](../assets/manual/10-talkers.png)
 
@@ -143,7 +143,10 @@ List of IP pairs ranked by volume, with protocol chips, quality grade, and quick
 
 ### 3.5 Gauges
 
-High-level rates and distributions for the loaded (or replaying) capture: packets/s, bytes/s, errors/s, top talkers by bytes, top protocols by packets.
+High-level rates and distributions: packets/s, bytes/s, errors/s, top talkers by bytes, top protocols by packets — plus:
+
+- **Degraded Quality Conversations** (Fair/Poor, worst first) → tap for Session  
+- **Quality timeline** → tap for a time slice → Talkers  
 
 ![Gauges](../assets/manual/11-gauges.png)
 
@@ -151,7 +154,7 @@ High-level rates and distributions for the loaded (or replaying) capture: packet
 
 ### 3.6 Decode
 
-Packet list + protocol tree + hex/ASCII for frames loaded into the Decode budget (default **5 000**; Options can raise to **10 000**). Search text or hex; filters from Circle/Talkers can scope to a pair.
+Packet list + protocol tree + hex/ASCII for frames loaded into the Decode budget (default **5 000**; Options can raise to **10 000**). Search text or hex; filters from Circle/Talkers can scope to a pair. Labels prefer readable names over raw opcodes; infra protocols (IPsec, BGP, OSPF, MPLS, VXLAN, NetFlow, LLDP, EAPOL, BPDU, mDNS, …) are best-effort.
 
 ![Decode — Telnet session filter](../assets/manual/12-decode.png)
 
@@ -167,9 +170,10 @@ Gear → **Options**.
 
 | Setting | Purpose |
 |---------|---------|
-| **Guided tour** | Replay demo and coach-mark Circle → session → Follow / Decode |
+| **Guided tour** | Demo + coach-marks Circle → Session → Gauges; Finish leaves a clean Circle |
 | **TCP health focus** | **Sockets (TCP ports)** — health per selected port · **Conversation (IP pair)** — one summary for the pair |
 | **Quality thresholds** | **Lenient** / **Balanced** (default) / **Strict** — how the same 0–100 score maps to Excellent–Poor colors |
+| **Show host names** | Prefer shortened DNS / mDNS / LLMNR / NetBIOS names on Circle, Talkers, Session |
 | **Follow TCP Stream — reassembly budget** | 64–1024 KB (affects max bytes/segments scanned) |
 | **Decode list — max packets** | 500–10 000 frames |
 | **How quality is measured** | In-app explanation of RST, retransmit, zero-window, RTT penalties |
@@ -202,11 +206,12 @@ Starts at 100 for TCP conversations with packets; penalties reduce the score (RS
 
 ### B. Diagnose a bad TCP session
 
-1. Quality mode → filter **Poor** (or find the pair on Talkers).
+1. Quality mode → filter **Poor**, or open **Gauges → Degraded Quality Conversations**.
 2. Open **Session** → read health (retransmits, RST, zero-window, RTT).
 3. Expand **quality charts** for timing and window behavior.
-4. If multiple ports: Options → **Sockets**, then pick the socket in Session.
-5. **Follow TCP Stream** or **Decode** (filtered to the pair) for payload/context.
+4. If multiple ports: Options → **Sockets**, then pick the socket in Session (ports appear on the bi-dir summary).
+5. Optionally tap the **quality timeline** for a time slice → Talkers.
+6. **Follow TCP Stream** or **Decode** (filtered to the pair) for payload/context.
 
 ### C. Services view
 
@@ -223,7 +228,7 @@ Expect **partial** app decode. Encrypted or uncommon protocols will stop at TLS/
 
 ### E. Guided onboarding
 
-Options → **Guided tour**, or the empty-state / menu entry. The tour loads the demo and walks protocol filters, quality mode, services, session panels, and Follow TCP Stream.
+Options → **Guided tour**, or the empty-state / menu entry. The tour loads the demo and walks Circle (protocol / quality / services), Session health, and Gauges (degraded list + timeline). Finish/Skip returns to a clean, unfiltered Circle.
 
 ---
 
